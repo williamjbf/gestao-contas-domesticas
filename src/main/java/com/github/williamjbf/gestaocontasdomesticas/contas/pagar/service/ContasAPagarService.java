@@ -3,7 +3,7 @@ package com.github.williamjbf.gestaocontasdomesticas.contas.pagar.service;
 import com.github.williamjbf.gestaocontasdomesticas.contas.Conta;
 import com.github.williamjbf.gestaocontasdomesticas.contas.TipoConta;
 import com.github.williamjbf.gestaocontasdomesticas.contas.pagar.ContaAPagarDTO;
-import com.github.williamjbf.gestaocontasdomesticas.contas.pagar.repository.ContasAPagarJpaRepository;
+import com.github.williamjbf.gestaocontasdomesticas.contas.repository.ContasJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,10 +13,10 @@ import java.util.List;
 @Service
 public class ContasAPagarService {
 
-    private final ContasAPagarJpaRepository repository;
+    private final ContasJpaRepository repository;
 
     @Autowired
-    public ContasAPagarService(final  ContasAPagarJpaRepository repository) {
+    public ContasAPagarService(final ContasJpaRepository repository) {
         this.repository = repository;
     }
 

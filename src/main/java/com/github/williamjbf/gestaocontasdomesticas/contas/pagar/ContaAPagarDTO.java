@@ -27,9 +27,9 @@ public class ContaAPagarDTO implements Serializable {
     @NotNull
     private Categoria categoria;
 
-    public Conta toConta(){
+    public Conta toConta() {
+        final Conta conta = new Conta();
 
-        Conta conta = new Conta();
         conta.setDescricao(this.descricao);
         conta.setValor(this.valor);
         conta.setData(this.data);
@@ -39,4 +39,5 @@ public class ContaAPagarDTO implements Serializable {
 
         return conta;
     }
+
 }

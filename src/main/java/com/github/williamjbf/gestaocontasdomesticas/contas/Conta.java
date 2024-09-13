@@ -1,8 +1,6 @@
 package com.github.williamjbf.gestaocontasdomesticas.contas;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 import java.io.Serializable;
@@ -14,14 +12,18 @@ import java.time.LocalDate;
 public class Conta implements Serializable {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String descricao;
     private BigDecimal valor;
     private LocalDate data;
+    @Enumerated(EnumType.STRING)
     private Status status;
+    @Enumerated(EnumType.STRING)
     private Categoria categoria;
     @Column(name = "tipo_conta")
+    @Enumerated(EnumType.STRING)
     private TipoConta tipoConta;
 
 }

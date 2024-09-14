@@ -1,5 +1,6 @@
-package com.github.williamjbf.gestaocontasdomesticas.cartoes;
+package com.github.williamjbf.gestaocontasdomesticas.cartoes.compras;
 
+import com.github.williamjbf.gestaocontasdomesticas.cartoes.Cartao;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -18,6 +19,7 @@ public class Compra {
     private LocalDate dataCompra;
     private BigDecimal valor;
     private String descricao;
+    @Enumerated(EnumType.STRING)
     private Categoria categoria;
 
     @ManyToOne

@@ -1,6 +1,7 @@
 package com.github.williamjbf.gestaocontasdomesticas.cartoes.compras;
 
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.dto.CriarCompraDTO;
+import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.dto.EditarCompraDTO;
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.service.CompraService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,13 +31,21 @@ public class ComprasResource {
     }
 
     @GetMapping
-    public ResponseEntity listarCompras(){
+    public ResponseEntity listarCompras() {
         final List<Compra> compras = service.listarCompras();
 
-        if(compras.isEmpty()){
+        if (compras.isEmpty()) {
             ResponseEntity.noContent();
         }
 
         return ResponseEntity.ok(compras);
+    }
+
+    @PutMapping
+    public ResponseEntity editarCompra(@Valid @RequestBody final EditarCompraDTO compraDTO) {
+
+        final Compra compra = service.editarCompra(compraDTO);
+
+        return ResponseEntity.ok(compra);
     }
 }

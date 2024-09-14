@@ -1,5 +1,6 @@
 package com.github.williamjbf.gestaocontasdomesticas.cartoes;
 
+import com.github.williamjbf.gestaocontasdomesticas.cartoes.dto.AtualizarCartaoDTO;
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.dto.CriarCartaoDTO;
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.service.CartoesService;
 import jakarta.validation.Valid;
@@ -30,13 +31,22 @@ public class CartoesResource implements Serializable {
     }
 
     @GetMapping
-    public ResponseEntity listarCartoes(){
+    public ResponseEntity listarCartoes() {
         final List<Cartao> cartoes = this.service.listarCartoes();
 
-        if(cartoes.isEmpty()){
+        if (cartoes.isEmpty()) {
             return ResponseEntity.noContent().build();
         }
 
         return ResponseEntity.ok(cartoes);
     }
+
+    @PutMapping
+    public ResponseEntity editarCartao(@Valid @RequestBody final AtualizarCartaoDTO cartaoDTO) {
+
+        final Cartao cartao = this.service.editarCartao(cartaoDTO);
+
+        return ResponseEntity.ok(cartao);
+    }
+
 }

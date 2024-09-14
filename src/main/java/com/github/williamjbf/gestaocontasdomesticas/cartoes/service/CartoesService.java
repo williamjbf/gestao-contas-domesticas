@@ -1,6 +1,7 @@
 package com.github.williamjbf.gestaocontasdomesticas.cartoes.service;
 
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.Cartao;
+import com.github.williamjbf.gestaocontasdomesticas.cartoes.dto.AtualizarCartaoDTO;
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.dto.CriarCartaoDTO;
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.repository.CartoesJparepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,5 +26,11 @@ public class CartoesService {
     public List<Cartao> listarCartoes() {
         final List<Cartao> cartoes = repository.findAll();
         return cartoes;
+    }
+
+    public Cartao editarCartao(final AtualizarCartaoDTO cartaoDTO) {
+        final Cartao cartao = repository.save(cartaoDTO.toCartao());
+
+        return cartao;
     }
 }

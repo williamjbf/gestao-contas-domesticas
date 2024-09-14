@@ -2,6 +2,7 @@ package com.github.williamjbf.gestaocontasdomesticas.contas.pagar;
 
 import com.github.williamjbf.gestaocontasdomesticas.contas.Conta;
 import com.github.williamjbf.gestaocontasdomesticas.contas.pagar.service.ContasAPagarService;
+import com.github.williamjbf.gestaocontasdomesticas.contas.receber.AtualizarContaAReceberDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,6 +38,14 @@ public class ContasAPagarResource {
         }
 
         return ResponseEntity.ok(contas);
+    }
+
+    @PutMapping
+    public ResponseEntity atualizarConta(@Valid @RequestBody AtualizarContaAPagarDTO contaDTO) {
+
+        final Conta conta = this.service.atualizarConta(contaDTO);
+
+        return ResponseEntity.ok(conta);
     }
 
 }

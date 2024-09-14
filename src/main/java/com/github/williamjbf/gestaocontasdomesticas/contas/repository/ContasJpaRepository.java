@@ -1,6 +1,7 @@
 package com.github.williamjbf.gestaocontasdomesticas.contas.repository;
 
 import com.github.williamjbf.gestaocontasdomesticas.contas.Conta;
+import com.github.williamjbf.gestaocontasdomesticas.contas.Status;
 import com.github.williamjbf.gestaocontasdomesticas.contas.TipoConta;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -11,5 +12,7 @@ import java.util.List;
 public interface ContasJpaRepository extends JpaRepository<Conta, Long> {
 
     List<Conta> findAllByTipoConta(final TipoConta tipoConta);
+
+    List<Conta> findAllByTipoContaAndStatus(final TipoConta tipoConta, final Status status);
 
 }

@@ -2,7 +2,6 @@ package com.github.williamjbf.gestaocontasdomesticas.contas.pagar;
 
 import com.github.williamjbf.gestaocontasdomesticas.contas.Conta;
 import com.github.williamjbf.gestaocontasdomesticas.contas.pagar.service.ContasAPagarService;
-import com.github.williamjbf.gestaocontasdomesticas.contas.receber.AtualizarContaAReceberDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,7 +22,7 @@ public class ContasAPagarResource {
     }
 
     @PostMapping
-    public ResponseEntity<Void> criarConta(@Valid @RequestBody final ContaAPagarDTO contaDTO){
+    public ResponseEntity<Void> criarConta(@Valid @RequestBody final ContaAPagarDTO contaDTO) {
         this.service.salvarConta(contaDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
@@ -38,6 +37,19 @@ public class ContasAPagarResource {
         }
 
         return ResponseEntity.ok(contas);
+    }
+
+    @GetMapping("/proximas/vencimento")
+    public ResponseEntity<List<Conta>> listarContasProximasAoVencimento(
+            @RequestParam(required = false, defaultValue = "2") final Long diasParaVencimento) {
+
+        final List<Conta> contasAVencer = this.service.listarContasProximasAoVencimento(diasParaVencimento);
+
+        if (contasAVencer.isEmpty()) {
+            return ResponseEntity.noContent().build();
+        }
+
+        return ResponseEntity.ok(contasAVencer);
     }
 
     @PutMapping

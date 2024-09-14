@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
-import {negativeValueValidator} from "../validators/negative-value.validator/negative-value.validator";
+import {negativeValueValidator} from "../../validators/negative-value.validator/negative-value.validator";
 
 interface ComprasCartaoCredito {
   descricao: string,
@@ -14,16 +14,16 @@ interface ComprasCartaoCredito {
 @Component({
   selector: 'app-compras-cartao-credito',
   standalone: true,
-  templateUrl: './compras-cartao-credito.component.html',
+  templateUrl: './compras-cartoes.component.html',
   imports: [
     FormsModule,
     NgIf,
     NgForOf,
     ReactiveFormsModule
   ],
-  styleUrls: ['./compras-cartao-credito.component.css']
+  styleUrls: ['./compras-cartoes.css']
 })
-export class ComprasCartaoCreditoComponent {
+export class ComprasCartoesComponent {
   compraForm: FormGroup;
   compras: ComprasCartaoCredito[] = [];
 

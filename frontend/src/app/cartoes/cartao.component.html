@@ -1,6 +1,6 @@
 <div class="container">
   <h2>Cartões</h2>
-  <form [formGroup]="cartaoForm" (ngSubmit)="addCartao()">
+  <form [formGroup]="cartaoForm" (ngSubmit)="addOrUpdateCartao()">
     <label for="limite">Limite:</label>
     <input id="limite" type="number" formControlName="limite" required>
     <div *ngIf="cartaoForm.get('limite')?.hasError('negativeValue')">
@@ -16,15 +16,32 @@
       A descrição é obrigatória.
     </div>
 
-    <button type="submit">Adicionar Cartão</button>
+    <button type="submit">Salvar Cartão</button>
   </form>
 
   <div *ngIf="cartoes.length > 0">
     <h3>Cartões Cadastrados</h3>
-    <ul>
-      <li *ngFor="let cartao of cartoes">
-        {{ cartao.id }} - {{ cartao.descricao }} - {{ cartao.limite }}
-      </li>
-    </ul>
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Descrição</th>
+        <th>Limite</th>
+        <th>Ações</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let cartao of cartoes" [ngClass]="{'limite-zero': cartao.limite === 0, 'limite-negativo': cartao.limite < 0}">
+        <td>{{ cartao.id }}</td>
+        <td>{{ cartao.descricao }}</td>
+        <td>{{ cartao.limite }}</td>
+        <td>
+          <button (click)="verCompras(cartao)">Ver compras</button>
+          <button (click)="editarCartao(cartao)">Editar</button>
+
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </div>

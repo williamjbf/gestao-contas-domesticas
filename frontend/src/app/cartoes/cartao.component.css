@@ -1,0 +1,60 @@
+.limite-zero {
+  background-color: orange;
+}
+
+.limite-zero:hover {
+  /* Uma versão levemente mais escura de laranja para dar feedbakc a ação do user */
+  background-color: #e69500;
+}
+
+.limite-negativo {
+  background-color: red;
+}
+
+.limite-negativo:hover {
+  /* Uma versão levemente mais escura de laranja para dar feedbakc a ação do user */
+  background-color: #cc0000;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+  font-size: 18px;
+  text-align: left;
+}
+
+th, td {
+  padding: 12px 15px;
+  border: 1px solid #ddd;
+}
+
+th {
+  background-color: #f4f4f4;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+tr:hover {
+  background-color: #f1f1f1;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+button:hover {
+  background-color: #45a049;
+}

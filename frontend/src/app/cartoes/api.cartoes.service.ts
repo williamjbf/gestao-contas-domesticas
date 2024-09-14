@@ -36,4 +36,14 @@ export class CartaoService {
     }
   }
 
+  public async atualizar(idCartao: number, cartao: Cartao): Promise<void> {
+    try {
+      cartao.id = idCartao;
+      await axios.put(this.baseURL, cartao);
+      console.log('Cartão atualizado com sucesso');
+    } catch (error) {
+      console.error('Erro ao atualizado cartão:', error);
+    }
+  }
+
 }

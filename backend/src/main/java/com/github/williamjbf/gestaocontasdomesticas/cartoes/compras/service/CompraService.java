@@ -34,4 +34,11 @@ public class CompraService {
 
         return compra;
     }
+
+    public List<Compra> buscarComprasPorCartao(final Long idCartao) {
+
+        final List<Compra> compras = repository.findAllByCartao_Id(idCartao);
+
+        return compras;
+    }
 }

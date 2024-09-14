@@ -48,4 +48,18 @@ public class ComprasResource {
 
         return ResponseEntity.ok(compra);
     }
+
+
+    @GetMapping("/{idCartao}")
+    public ResponseEntity<List<Compra>> buscarComprasPorCartao(@PathVariable(name = "idCartao") final Long idCartao){
+
+        final List<Compra> compras = service.buscarComprasPorCartao(idCartao);
+
+        if (compras.isEmpty()) {
+            ResponseEntity.noContent();
+        }
+
+        return ResponseEntity.ok(compras);
+    }
+    
 }

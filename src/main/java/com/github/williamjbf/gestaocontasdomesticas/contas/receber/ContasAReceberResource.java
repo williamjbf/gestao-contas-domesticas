@@ -39,4 +39,12 @@ public class ContasAReceberResource {
         return ResponseEntity.ok(contas);
     }
 
+    @PutMapping
+    public ResponseEntity atualizarConta(@Valid @RequestBody AtualizarContaAReceberDTO contaDTO) {
+
+        final Conta conta = this.service.atualizarConta(contaDTO);
+
+        return ResponseEntity.ok(conta);
+    }
+
 }

@@ -2,6 +2,7 @@ package com.github.williamjbf.gestaocontasdomesticas.contas.receber.service;
 
 import com.github.williamjbf.gestaocontasdomesticas.contas.Conta;
 import com.github.williamjbf.gestaocontasdomesticas.contas.TipoConta;
+import com.github.williamjbf.gestaocontasdomesticas.contas.receber.AtualizarContaAReceberDTO;
 import com.github.williamjbf.gestaocontasdomesticas.contas.receber.ContaAReceberDTO;
 import com.github.williamjbf.gestaocontasdomesticas.contas.repository.ContasJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,4 +30,7 @@ public class ContasAReceberService {
         return repository.findAllByTipoConta(TipoConta.CONTA_A_RECEBER);
     }
 
+    public Conta atualizarConta(final AtualizarContaAReceberDTO contaDTO) {
+        return repository.save(contaDTO.toConta());
+    }
 }

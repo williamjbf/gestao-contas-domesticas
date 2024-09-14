@@ -22,7 +22,11 @@ public class SimpleCORSFilter {
             @Override
             public void addCorsMappings(final CorsRegistry registry) {
                 if (corsSettingsBeans.isCORSFilterEnable()) {
-                    registry.addMapping("/api/**").allowedOrigins("*");
+                    registry.addMapping("/api/**")
+                            .allowedOriginPatterns("*")
+                            .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                            .allowedHeaders("Access-Control-Allow-Headers", "Authorization", "Content-Type", "Accept", "Refreshed-Token", "Content-Disposition")
+                            .allowCredentials(true);
                 }
             }
         };

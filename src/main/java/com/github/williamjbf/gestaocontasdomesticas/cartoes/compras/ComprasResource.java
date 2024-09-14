@@ -6,10 +6,9 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/cartoes/compras")
@@ -28,5 +27,16 @@ public class ComprasResource {
         service.adicionarCompra(compraDTO);
 
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @GetMapping
+    public ResponseEntity listarCompras(){
+        final List<Compra> compras = service.listarCompras();
+
+        if(compras.isEmpty()){
+            ResponseEntity.noContent();
+        }
+
+        return ResponseEntity.ok(compras);
     }
 }

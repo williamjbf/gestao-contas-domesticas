@@ -1,0 +1,37 @@
+<div class="container">
+  <h2>Contas a Receber</h2>
+  <form (ngSubmit)="addReceita()">
+    <label for="descricao">Descrição:</label>
+    <input id="descricao" [(ngModel)]="receita.descricao" name="descricao" required>
+
+    <label for="valor">Valor:</label>
+    <input id="valor" type="number" [(ngModel)]="receita.valor" name="valor" required>
+
+    <label for="recebimento">Data de Recebimento:</label>
+    <input id="recebimento" type="date" [(ngModel)]="receita.recebimento" name="recebimento" required>
+
+    <label for="status">Status:</label>
+    <select id="status" [(ngModel)]="receita.status" name="status" required>
+      <option value="pendente">Pendente</option>
+      <option value="recebido">Recebido</option>
+    </select>
+
+    <label for="categoria">Categoria:</label>
+    <select id="categoria" [(ngModel)]="receita.categoria" name="categoria">
+      <option value="salario">Salário</option>
+      <option value="investimentos">Investimentos</option>
+      <!-- Adicione mais categorias conforme necessário -->
+    </select>
+
+    <button type="submit">Adicionar Receita</button>
+  </form>
+
+  <div *ngIf="receitas.length > 0">
+    <h3>Receitas Registradas</h3>
+    <ul>
+      <li *ngFor="let receita of receitas">
+        {{ receita.descricao }} - {{ receita.valor }} - {{ receita.recebimento }} - {{ receita.status }}
+      </li>
+    </ul>
+  </div>
+</div>

@@ -26,13 +26,6 @@ interface ContaPagar {
 export class ContasAPagarComponent {
   contaForm: FormGroup;
   contas: ContaPagar[] = [];
-  conta: ContaPagar = {
-    descricao: '',
-    valor: 0,
-    vencimento: '',
-    status: 'pendente',
-    categoria: ''
-  };
 
   constructor(private fb: FormBuilder) {
     this.contaForm = this.fb.group({
@@ -46,8 +39,8 @@ export class ContasAPagarComponent {
 
   addContaPagar() {
     if (this.contaForm.valid) {
-      this.contas.push({ ...this.conta });
-      this.conta = { descricao: '', valor: 0, vencimento: '', status: 'pendente', categoria: '' };
+      this.contas.push({ ...this.contaForm.value });
+      this.contaForm.reset();
     }
   }
 }

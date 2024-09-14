@@ -26,13 +26,6 @@ interface ComprasCartaoCredito {
 export class ComprasCartaoCreditoComponent {
   compraForm: FormGroup;
   compras: ComprasCartaoCredito[] = [];
-  compra: ComprasCartaoCredito= {
-    descricao: '',
-    valor: 0,
-    dataCompra: '',
-    categoria: '',
-    cartao: 0
-  };
 
   constructor(private fb: FormBuilder) {
     this.compraForm = this.fb.group({
@@ -46,8 +39,8 @@ export class ComprasCartaoCreditoComponent {
 
   addCompra() {
     if (this.compraForm.valid) {
-      this.compras.push({...this.compra});
-      this.compra = {descricao: '', valor: 0, dataCompra: '', categoria: '', cartao: 0};
+      this.compras.push({...this.compraForm.value});
+      this.compraForm.reset();
     }
   }
 }

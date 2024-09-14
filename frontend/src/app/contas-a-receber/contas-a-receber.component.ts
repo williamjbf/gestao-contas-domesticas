@@ -27,13 +27,6 @@ interface Receita {
 export class ContasAReceberComponent {
   contaForm: FormGroup;
   receitas: Receita[] = [];
-  receita: Receita = {
-    descricao: '',
-    valor: 0,
-    recebimento: '',
-    status: 'pendente',
-    categoria: ''
-  };
 
   constructor(private fb: FormBuilder) {
     this.contaForm = this.fb.group({
@@ -47,8 +40,8 @@ export class ContasAReceberComponent {
 
   addReceita() {
     if (this.contaForm.valid) {
-      this.receitas.push({ ...this.receita });
-      this.receita = { descricao: '', valor: 0, recebimento: '', status: 'pendente', categoria: '' };
+      this.receitas.push({ ...this.contaForm.value });
+      this.contaForm.reset();
     }
   }
 }

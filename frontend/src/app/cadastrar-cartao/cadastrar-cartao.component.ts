@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
 import {negativeValueValidator} from "../validators/negative-value.validator/negative-value.validator";
+import {CartaoService} from "../cartoes/api.service";
+
 
 interface Cartao {
   id: number;
@@ -25,17 +27,35 @@ export class CadastrarCartaoComponent {
   cartaoForm: FormGroup;
   cartoes: Cartao[] = [];
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder,
+              private service: CartaoService) {
     this.cartaoForm = this.fb.group({
       limite: [0, [Validators.required, negativeValueValidator()]],
       descricao: ['', Validators.required]
     });
   }
 
-  addCartao() {
+  async ngOnInit() {
+    await this.loadCartoes();
+  }
+
+  async addCartao() {
     if (this.cartaoForm.valid) {
-      this.cartoes.push({ ...this.cartaoForm.value });
-      this.cartaoForm.reset();
+      try {
+        await this.service.cadastrar(this.cartaoForm.value);
+        this.cartaoForm.reset();
+        await this.loadCartoes();
+      } catch (error) {
+        console.error('Erro ao cadastrar cartão:', error);
+      }
+    }
+  }
+
+  async loadCartoes() {
+    try {
+      this.cartoes = await this.service.listar();
+    } catch (error) {
+      console.error('Erro ao carregar cartões:', error);
     }
   }
 }

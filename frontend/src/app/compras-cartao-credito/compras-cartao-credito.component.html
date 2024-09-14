@@ -1,24 +1,42 @@
 <div class="container">
   <h2>Compras com Cartão de Crédito</h2>
-  <form (ngSubmit)="addCompra()">
+  <form [formGroup]="compraForm" (ngSubmit)="addCompra()">
     <label for="descricao">Descrição:</label>
-    <input id="descricao" [(ngModel)]="compra.descricao" name="descricao" required>
+    <input id="descricao" formControlName="descricao" required>
+    <div *ngIf="compraForm.get('descricao')?.invalid && compraForm.get('descricao')?.touched">
+      A descrição é obrigatória.
+    </div>
 
     <label for="valor">Valor:</label>
-    <input id="valor" type="number" [(ngModel)]="compra.valor" name="valor" required>
+    <input id="valor" type="number" formControlName="valor" required>
+    <div *ngIf="compraForm.get('valor')?.hasError('negativeValue')">
+      O valor não pode ser negativo.
+    </div>
+    <div *ngIf="compraForm.get('valor')?.invalid && compraForm.get('valor')?.touched && !compraForm.get('valor')?.hasError('negativeValue')">
+      O valor é obrigatório.
+    </div>
 
     <label for="dataCompra">Data da Compra:</label>
-    <input id="dataCompra" type="date" [(ngModel)]="compra.dataCompra" name="dataCompra" required>
+    <input id="dataCompra" type="date" formControlName="dataCompra" required>
+    <div *ngIf="compraForm.get('dataCompra')?.invalid && compraForm.get('dataCompra')?.touched">
+      A data da compra é obrigatória.
+    </div>
 
     <label for="categoria">Categoria:</label>
-    <select id="categoria" [(ngModel)]="compra.categoria" name="categoria">
+    <select id="categoria" formControlName="categoria">
       <option value="alimentacao">Alimentação</option>
       <option value="eletronicos">Eletrônicos</option>
       <!-- Adicione mais categorias conforme necessário -->
     </select>
+    <div *ngIf="compraForm.get('categoria')?.invalid && compraForm.get('categoria')?.touched">
+      A categoria é obrigatória.
+    </div>
 
     <label for="cartao">Cartão Utilizado:</label>
-    <input id="cartao" [(ngModel)]="compra.cartao" name="cartao" required>
+    <input id="cartao" formControlName="cartao" required>
+    <div *ngIf="compraForm.get('cartao')?.invalid && compraForm.get('cartao')?.touched">
+      O cartão é obrigatório.
+    </div>
 
     <button type="submit">Adicionar Compra</button>
   </form>

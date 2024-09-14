@@ -1,28 +1,45 @@
 <div class="container">
   <h2>Contas a Pagar</h2>
-  <form (ngSubmit)="addContaPagar()">
+  <form [formGroup]="contaForm" (ngSubmit)="addContaPagar()">
     <label for="descricao">Descrição:</label>
-    <input id="descricao" [(ngModel)]="conta.descricao" name="descricao" required>
+    <input id="descricao" formControlName="descricao" required>
+    <div *ngIf="contaForm.get('descricao')?.invalid && contaForm.get('descricao')?.touched">
+      A descrição é obrigatória.
+    </div>
 
     <label for="valor">Valor:</label>
-    <input id="valor" type="number" [(ngModel)]="conta.valor" name="valor" required>
+    <input id="valor" type="number" formControlName="valor" required>
+    <div *ngIf="contaForm.get('valor')?.hasError('negativeValue')">
+      O valor não pode ser negativo.
+    </div>
+    <div *ngIf="contaForm.get('valor')?.invalid && contaForm.get('valor')?.touched && !contaForm.get('valor')?.hasError('negativeValue')">
+      O valor é obrigatório.
+    </div>
 
     <label for="vencimento">Data de Vencimento:</label>
-    <input id="vencimento" type="date" [(ngModel)]="conta.vencimento" name="vencimento" required>
+    <input id="vencimento" type="date" formControlName="vencimento" required>
+    <div *ngIf="contaForm.get('vencimento')?.invalid && contaForm.get('vencimento')?.touched">
+      A data de vencimento é obrigatória.
+    </div>
 
     <label for="status">Status:</label>
-    <select id="status" [(ngModel)]="conta.status" name="status" required>
+    <select id="status" formControlName="status" required>
       <option value="pendente">Pendente</option>
       <option value="paga">Paga</option>
     </select>
+    <div *ngIf="contaForm.get('status')?.invalid && contaForm.get('status')?.touched">
+      O status é obrigatório.
+    </div>
 
     <label for="categoria">Categoria:</label>
-    <select id="categoria" [(ngModel)]="conta.categoria" name="categoria">
+    <select id="categoria" formControlName="categoria">
       <option value="alimentacao">Alimentação</option>
       <option value="moradia">Moradia</option>
       <option value="transporte">Transporte</option>
-      <!-- Adicione mais categorias conforme necessário -->
     </select>
+    <div *ngIf="contaForm.get('categoria')?.invalid && contaForm.get('categoria')?.touched">
+      A categoria é obrigatória.
+    </div>
 
     <button type="submit">Adicionar Conta</button>
   </form>

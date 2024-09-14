@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import {FormsModule} from "@angular/forms";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
+import {negativeValueValidator} from "../validators/negative-value.validator/negative-value.validator";
 
 interface ContaPagar {
   descricao: string;
@@ -17,11 +18,14 @@ interface ContaPagar {
   imports: [
     FormsModule,
     NgIf,
-    NgForOf
+    NgForOf,
+    ReactiveFormsModule
   ],
   styleUrls: ['./contas-a-pagar.component.css']
 })
 export class ContasAPagarComponent {
+  contaForm: FormGroup;
+  contas: ContaPagar[] = [];
   conta: ContaPagar = {
     descricao: '',
     valor: 0,
@@ -30,10 +34,20 @@ export class ContasAPagarComponent {
     categoria: ''
   };
 
-  contas: ContaPagar[] = [];
+  constructor(private fb: FormBuilder) {
+    this.contaForm = this.fb.group({
+      descricao: ['', Validators.required],
+      valor: [0, [Validators.required, negativeValueValidator()]],
+      vencimento: ['', Validators.required],
+      status: ['', Validators.required],
+      categoria: ['', Validators.required]
+    });
+  }
 
   addContaPagar() {
-    this.contas.push({ ...this.conta });
-    this.conta = { descricao: '', valor: 0, vencimento: '', status: 'pendente', categoria: '' };
+    if (this.contaForm.valid) {
+      this.contas.push({ ...this.conta });
+      this.conta = { descricao: '', valor: 0, vencimento: '', status: 'pendente', categoria: '' };
+    }
   }
 }

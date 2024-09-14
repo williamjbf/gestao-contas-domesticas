@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import {FormsModule} from "@angular/forms";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
+import {negativeValueValidator} from "../validators/negative-value.validator/negative-value.validator";
 
 interface Receita {
   descricao: string;
@@ -15,7 +16,8 @@ interface Receita {
   imports: [
     FormsModule,
     NgIf,
-    NgForOf
+    NgForOf,
+    ReactiveFormsModule
   ],
 
   templateUrl: './contas-a-receber.component.html',
@@ -23,6 +25,8 @@ interface Receita {
   standalone: true
 })
 export class ContasAReceberComponent {
+  contaForm: FormGroup;
+  receitas: Receita[] = [];
   receita: Receita = {
     descricao: '',
     valor: 0,
@@ -31,11 +35,20 @@ export class ContasAReceberComponent {
     categoria: ''
   };
 
-  receitas: Receita[] = [];
+  constructor(private fb: FormBuilder) {
+    this.contaForm = this.fb.group({
+      descricao: ['', Validators.required],
+      valor: [0, [Validators.required, negativeValueValidator()]],
+      recebimento: ['', Validators.required],
+      status: ['', Validators.required],
+      categoria: ['', Validators.required]
+    });
+  }
 
   addReceita() {
-    console.log(this.receitas)
-    this.receitas.push({ ...this.receita });
-    this.receita = { descricao: '', valor: 0, recebimento: '', status: 'pendente', categoria: '' };
+    if (this.contaForm.valid) {
+      this.receitas.push({ ...this.receita });
+      this.receita = { descricao: '', valor: 0, recebimento: '', status: 'pendente', categoria: '' };
+    }
   }
 }

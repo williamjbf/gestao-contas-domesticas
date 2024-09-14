@@ -1,23 +1,38 @@
 <div class="container">
   <h2>Contas a Receber</h2>
-  <form (ngSubmit)="addReceita()">
+  <form [formGroup]="contaForm" (ngSubmit)="addReceita()">
     <label for="descricao">Descrição:</label>
-    <input id="descricao" [(ngModel)]="receita.descricao" name="descricao" required>
+    <input id="descricao" formControlName="descricao" required>
+    <div *ngIf="contaForm.get('descricao')?.invalid && contaForm.get('descricao')?.touched">
+      A descrição é obrigatória.
+    </div>
 
     <label for="valor">Valor:</label>
-    <input id="valor" type="number" [(ngModel)]="receita.valor" name="valor" required>
+    <input id="valor" type="number" formControlName="valor" required>
+    <div *ngIf="contaForm.get('valor')?.hasError('negativeValue')">
+      O valor não pode ser negativo.
+    </div>
+    <div *ngIf="contaForm.get('valor')?.invalid && contaForm.get('valor')?.touched && !contaForm.get('valor')?.hasError('negativeValue')">
+      O valor é obrigatório.
+    </div>
 
     <label for="recebimento">Data de Recebimento:</label>
-    <input id="recebimento" type="date" [(ngModel)]="receita.recebimento" name="recebimento" required>
+    <input id="recebimento" type="date" formControlName="recebimento" required>
+    <div *ngIf="contaForm.get('recebimento')?.invalid && contaForm.get('recebimento')?.touched">
+      A data de recebimento é obrigatória.
+    </div>
 
     <label for="status">Status:</label>
-    <select id="status" [(ngModel)]="receita.status" name="status" required>
+    <select id="status" formControlName="status" required>
       <option value="pendente">Pendente</option>
       <option value="recebido">Recebido</option>
     </select>
+    <div *ngIf="contaForm.get('status')?.invalid && contaForm.get('status')?.touched">
+      O status é obrigatório.
+    </div>
 
     <label for="categoria">Categoria:</label>
-    <select id="categoria" [(ngModel)]="receita.categoria" name="categoria">
+    <select id="categoria" formControlName="categoria">
       <option value="salario">Salário</option>
       <option value="investimentos">Investimentos</option>
       <!-- Adicione mais categorias conforme necessário -->

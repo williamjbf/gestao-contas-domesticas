@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
-import {FormsModule} from "@angular/forms";
+import {FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
 import {NgForOf, NgIf} from "@angular/common";
+import {negativeValueValidator} from "../validators/negative-value.validator/negative-value.validator";
 
 interface ComprasCartaoCredito {
   descricao: string,
@@ -17,11 +18,14 @@ interface ComprasCartaoCredito {
   imports: [
     FormsModule,
     NgIf,
-    NgForOf
+    NgForOf,
+    ReactiveFormsModule
   ],
   styleUrls: ['./compras-cartao-credito.component.css']
 })
 export class ComprasCartaoCreditoComponent {
+  compraForm: FormGroup;
+  compras: ComprasCartaoCredito[] = [];
   compra: ComprasCartaoCredito= {
     descricao: '',
     valor: 0,
@@ -30,10 +34,20 @@ export class ComprasCartaoCreditoComponent {
     cartao: 0
   };
 
-  compras: ComprasCartaoCredito[] = [];
+  constructor(private fb: FormBuilder) {
+    this.compraForm = this.fb.group({
+      descricao: ['', Validators.required],
+      valor: [0, [Validators.required, negativeValueValidator()]],
+      dataCompra: ['', Validators.required],
+      categoria: ['', Validators.required],
+      cartao: ['', Validators.required]
+    });
+  }
 
   addCompra() {
-    this.compras.push({...this.compra});
-    this.compra = {descricao: '', valor: 0, dataCompra: '', categoria: '', cartao: 0};
+    if (this.compraForm.valid) {
+      this.compras.push({...this.compra});
+      this.compra = {descricao: '', valor: 0, dataCompra: '', categoria: '', cartao: 0};
+    }
   }
 }

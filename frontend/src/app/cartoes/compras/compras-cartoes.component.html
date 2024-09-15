@@ -1,6 +1,6 @@
 <div class="container">
   <h2>Compras com Cartão de Crédito</h2>
-  <form [formGroup]="compraForm" (ngSubmit)="addCompra()">
+  <form [formGroup]="compraForm" (ngSubmit)="addOrUpdateCompra()">
     <label for="descricao">Descrição:</label>
     <input id="descricao" formControlName="descricao" required>
     <div *ngIf="compraForm.get('descricao')?.invalid && compraForm.get('descricao')?.touched">
@@ -24,8 +24,8 @@
 
     <label for="categoria">Categoria:</label>
     <select id="categoria" formControlName="categoria">
-      <option value="alimentacao">Alimentação</option>
-      <option value="eletronicos">Eletrônicos</option>
+      <option value="ALIMENTAÇÃO">Alimentação</option>
+      <option value="ELETRONICOS">Eletrônicos</option>
       <!-- Adicione mais categorias conforme necessário -->
     </select>
     <div *ngIf="compraForm.get('categoria')?.invalid && compraForm.get('categoria')?.touched">
@@ -33,7 +33,9 @@
     </div>
 
     <label for="cartao">Cartão Utilizado:</label>
-    <input id="cartao" formControlName="cartao" required>
+    <select id="cartao" formControlName="cartao" required>
+      <option *ngFor="let cartao of cartoes" [value]="cartao.id">{{ cartao.descricao }}</option>
+    </select>
     <div *ngIf="compraForm.get('cartao')?.invalid && compraForm.get('cartao')?.touched">
       O cartão é obrigatório.
     </div>
@@ -43,10 +45,29 @@
 
   <div *ngIf="compras.length > 0">
     <h3>Compras Registradas</h3>
-    <ul>
-      <li *ngFor="let compra of compras">
-        {{ compra.descricao }} - {{ compra.valor }} - {{ compra.dataCompra }} - {{ compra.cartao }}
-      </li>
-    </ul>
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Descrição</th>
+        <th>Valor</th>
+        <th>Data de Compra</th>
+        <th>Cartão</th>
+        <th>Ações</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let compra of compras">
+        <td>{{ compra.id }}</td>
+        <td>{{ compra.descricao }}</td>
+        <td>{{ compra.valor }}</td>
+        <td> {{ formatarData(compra.dataCompra) }}</td>
+        <td>{{ compra.cartao.descricao }}</td>
+        <td>
+          <button (click)="editarCompra(compra)">Editar</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 </div>

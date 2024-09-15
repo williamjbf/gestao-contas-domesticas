@@ -1,12 +1,7 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
 import axios from "axios";
-
-interface Cartao {
-  id: number,
-  limite: number;
-  descricao: string;
-}
+import {Cartao} from "./models/cartao.model";
 
 @Injectable({
   providedIn: 'root'

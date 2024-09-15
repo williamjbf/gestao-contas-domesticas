@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
-import { DatePipe, NgForOf, NgIf } from "@angular/common";
+import {DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import { negativeValueValidator } from "../../validators/negative-value.validator/negative-value.validator";
 import { ComprasService } from "./service/api.compras.service";
 import { Cartao } from "../models/cartao.model";
@@ -8,6 +8,7 @@ import { Compra } from "./models/compra.model";
 import { CartaoService } from "../api.cartoes.service";
 import {ActivatedRoute} from "@angular/router";
 import {ParcelasModalComponent} from "./parcelas/parcelas-modal.component";
+import {Parcela} from "./parcelas/models/parcela.model";
 
 @Component({
   selector: 'app-compras-cartao-credito',
@@ -19,7 +20,8 @@ import {ParcelasModalComponent} from "./parcelas/parcelas-modal.component";
     NgIf,
     NgForOf,
     ReactiveFormsModule,
-    ParcelasModalComponent
+    ParcelasModalComponent,
+    NgClass
   ],
   providers: [DatePipe]
 })
@@ -118,14 +120,51 @@ export class ComprasCartoesComponent {
     });
   }
 
+  quantidadeParcelasPagas(parcelas: Parcela[]): number {
+    return parcelas.filter(parcela => parcela.paga).length;
+  }
+
   async verParcelas(compra: Compra) {
     // Ordena as parcelas com base no atributo ordem
     this.parcelas = compra.parcelas.sort((a, b) => a.ordem - b.ordem);
     this.showModal = true;
   }
 
-  closeModal() {
+  /*
+    A compra está vencida de uma de suas Parcelas estiver vencida
+   */
+  isVencida(compra: Compra): boolean {
+    if (compra.paga) return false;
+
+    const hoje = new Date();
+    return compra.parcelas.some(parcela => new Date(parcela.dataCobranca) <= hoje && !parcela.paga);
+  }
+
+  async closeModal() {
     this.showModal = false;
+    await this.loadCompras();
+  }
+
+  async marcarPaga(compra: Compra) {
+    try {
+      await this.service.alterarStatusPagamento(compra.id, {
+        status: 'PAGO'
+      });
+      await this.loadCompras();
+    } catch (error) {
+      console.error('Erro ao atualizar Compra:', error);
+    }
+  }
+
+  async marcarNaoPaga(compra: Compra) {
+    try {
+      await this.service.alterarStatusPagamento(compra.id, {
+        status: 'NAO_PAGO'
+      });
+      await this.loadCompras();
+    } catch (error) {
+      console.error('Erro ao atualizar Compra:', error);
+    }
   }
 
 }

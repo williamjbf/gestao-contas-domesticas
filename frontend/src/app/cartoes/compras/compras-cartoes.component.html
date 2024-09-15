@@ -69,7 +69,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let compra of compras">
+      <tr *ngFor="let compra of compras" [ngClass]="{'linha-paga': compra.paga, 'linha-vencida': isVencida(compra)}">
         <td>{{ compra.id }}</td>
         <td>{{ compra.descricao }}</td>
         <td>{{ compra.valor }}</td>
@@ -81,6 +81,9 @@
           <button (click)="editarCompra(compra)">Editar</button>
           <br>
           <button *ngIf="compra.parcelas.length > 0" (click)="verParcelas(compra)">Ver Parcelas</button>
+          <br>
+          <button *ngIf="!compra.paga" class="btn-paga" (click)="marcarPaga(compra)">Marcar como Paga</button>
+          <button *ngIf="compra.paga" class="btn-nao-paga" (click)="marcarNaoPaga(compra)">Marcar como <b>Não</b> Paga</button>
         </td>
       </tr>
       </tbody>

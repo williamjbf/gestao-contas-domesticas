@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import axios from "axios";
+import axios from '../../../interceptors/axios.interceptor';
 import {environment} from "../../../../environments/environment";
 import {Compra} from "../models/compra.model";
+import {StatusPagamento} from "../models/statuspagamento.model";
 
 @Injectable({
   providedIn: 'root'
@@ -56,6 +57,15 @@ export class ComprasService {
       compra.id = idCompra;
       await axios.put(this.baseURL, compra);
       console.log('Compra atualizada com sucesso');
+    } catch (error) {
+      console.error('Erro ao atualizar a Compra:', error);
+    }
+  }
+
+  public async alterarStatusPagamento(idCompra: number | null, status: StatusPagamento) : Promise<void> {
+    try {
+      await axios.put(this.baseURL + "/" + idCompra, status);
+      console.log('Compra atualizada sucesso');
     } catch (error) {
       console.error('Erro ao atualizar a Compra:', error);
     }

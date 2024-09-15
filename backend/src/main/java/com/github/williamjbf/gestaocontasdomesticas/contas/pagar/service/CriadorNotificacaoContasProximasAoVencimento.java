@@ -25,7 +25,7 @@ public class CriadorNotificacaoContasProximasAoVencimento {
         this.notificador = notificador;
     }
 
-    @Scheduled(fixedDelay = 5000)
+    @Scheduled(fixedDelay = 600000)
     public void criarNotificacoesProximasAoVencimento() {
 
         final Long mockUser = 1L;

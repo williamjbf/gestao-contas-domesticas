@@ -16,7 +16,11 @@ public class Notificador {
     }
 
     public void notificar(final Long user, final Notificacao notificacao) {
-        listeners.get(user).tryEmitNext(notificacao);
+        final Sinks.Many userNotifier = listeners.get(user);
+
+        if (userNotifier != null) {
+            userNotifier.tryEmitNext(notificacao);
+        }
     }
 
 }

@@ -18,28 +18,26 @@ public class CriadorNotificacaoContasProximasAoVencimento {
     private final Long diasParaVencimento = 2L;
 
     private final ContasAPagarService contasAPagarService;
-    private final UsuarioService usuarioService;
     private final Notificador notificador;
 
     @Autowired
     public CriadorNotificacaoContasProximasAoVencimento(final ContasAPagarService contasAPagarService,
-                                                        final UsuarioService usuarioService,
                                                         final Notificador notificador) {
         this.contasAPagarService = contasAPagarService;
-        this.usuarioService = usuarioService;
         this.notificador = notificador;
     }
 
-    @Scheduled(fixedDelay = 600000)
+    @Scheduled(fixedDelay = 5000)
     public void criarNotificacoesProximasAoVencimento() {
 
-        final Usuario usuarioLogado = usuarioService.getUsuarioLogado();
-        final Long idUsuario = usuarioLogado != null ? usuarioLogado.getId() : -1L;
-
-        contasAPagarService.listarContasProximasAoVencimento(diasParaVencimento, idUsuario).stream()
-                .map(this::criarMensagemNotificacaoConta)
-                .map(mensagem -> Notificacao.builder().mensagem(mensagem).build())
-                .forEach(notificacao -> notificador.notificar(idUsuario, notificacao));
+        contasAPagarService.recuperarContasProximasAoVencimento(diasParaVencimento)
+                .forEach((usuarioID, contas) -> {
+                    contas.forEach(conta -> {
+                        var mensagem = criarMensagemNotificacaoConta(conta);
+                        var notificacao = Notificacao.builder().id(conta.getId()).mensagem(mensagem).build();
+                        notificador.notificar(usuarioID, notificacao);
+                    });
+                });
     }
 
     private String criarMensagemNotificacaoConta(final Conta conta) {

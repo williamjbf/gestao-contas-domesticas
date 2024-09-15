@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {environment} from "../../../../environments/environment";
-import axios from "axios";
 import {ContaReceber} from "../models/conta.receber.model";
+import axios from '../../../interceptors/axios.interceptor';
 
 @Injectable({
   providedIn: 'root'

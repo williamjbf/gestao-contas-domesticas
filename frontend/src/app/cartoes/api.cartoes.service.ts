@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
-import axios from "axios";
+import axios from '../interceptors/axios.interceptor';
 import {Cartao} from "./models/cartao.model";
 
 @Injectable({

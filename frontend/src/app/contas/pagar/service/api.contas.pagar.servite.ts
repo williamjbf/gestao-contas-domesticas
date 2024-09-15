@@ -1,7 +1,7 @@
 import {Injectable} from "@angular/core";
 import {environment} from "../../../../environments/environment";
 import {ContaPagar} from "../models/conta.pagar.model";
-import axios from "axios";
+import axios from '../../../interceptors/axios.interceptor';
 
 @Injectable({
   providedIn: 'root'

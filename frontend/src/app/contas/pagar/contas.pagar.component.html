@@ -1,6 +1,6 @@
 <div class="container">
   <h2>Contas a Pagar</h2>
-  <form [formGroup]="contaForm" (ngSubmit)="addContaPagar()">
+  <form [formGroup]="contaForm" (ngSubmit)="addOrUpdateConta()">
     <label for="descricao">Descrição:</label>
     <input id="descricao" formControlName="descricao" required>
     <div *ngIf="contaForm.get('descricao')?.invalid && contaForm.get('descricao')?.touched">
@@ -16,16 +16,16 @@
       O valor é obrigatório.
     </div>
 
-    <label for="vencimento">Data de Vencimento:</label>
-    <input id="vencimento" type="date" formControlName="vencimento" required>
-    <div *ngIf="contaForm.get('vencimento')?.invalid && contaForm.get('vencimento')?.touched">
+    <label for="data">Data de Vencimento:</label>
+    <input id="data" type="date" formControlName="data" required>
+    <div *ngIf="contaForm.get('data')?.invalid && contaForm.get('data')?.touched">
       A data de vencimento é obrigatória.
     </div>
 
     <label for="status">Status:</label>
     <select id="status" formControlName="status" required>
-      <option value="pendente">Pendente</option>
-      <option value="paga">Paga</option>
+      <option value="PENDENTE">Pendente</option>
+      <option value="PAGA">Paga</option>
     </select>
     <div *ngIf="contaForm.get('status')?.invalid && contaForm.get('status')?.touched">
       O status é obrigatório.
@@ -33,23 +33,44 @@
 
     <label for="categoria">Categoria:</label>
     <select id="categoria" formControlName="categoria">
-      <option value="alimentacao">Alimentação</option>
-      <option value="moradia">Moradia</option>
-      <option value="transporte">Transporte</option>
+      <option value="ALIMENTAÇÃO">Alimentação</option>
+      <option value="MORADIRA">Moradia</option>
+      <option value="TRANSPORTE">Transporte</option>
     </select>
     <div *ngIf="contaForm.get('categoria')?.invalid && contaForm.get('categoria')?.touched">
       A categoria é obrigatória.
     </div>
 
-    <button type="submit">Adicionar Conta</button>
+    <button type="submit">Salvar Compra</button>
   </form>
 
   <div *ngIf="contas.length > 0">
-    <h3>Contas Registradas</h3>
-    <ul>
-      <li *ngFor="let conta of contas">
-        {{ conta.descricao }} - {{ conta.valor }} - {{ conta.vencimento }} - {{ conta.status }}
-      </li>
-    </ul>
+    <h3>Cartões Cadastrados</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Descrição</th>
+        <th>valor</th>
+        <th>Data Vencimento</th>
+        <th>Status</th>
+        <th>Ações</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let conta of contas">
+        <td>{{ conta.id }}</td>
+        <td>{{ conta.descricao }}</td>
+        <td>{{ conta.valor }}</td>
+        <td>{{ formatarData(conta.data) }}</td>
+        <td>{{ conta.status }}</td>
+
+        <td>
+          <button (click)="editarConta(conta)">Editar</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
+
 </div>

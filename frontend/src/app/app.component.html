@@ -1,4 +1,4 @@
-<nav>
+<nav *ngIf="!isLoginPage()">
   <ul>
     <li><a routerLink="/contas-a-pagar">Contas a Pagar</a></li>
     <li><a routerLink="/contas-a-receber">Contas a Receber</a></li>

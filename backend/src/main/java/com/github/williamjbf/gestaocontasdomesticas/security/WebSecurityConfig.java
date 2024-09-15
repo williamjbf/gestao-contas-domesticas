@@ -1,5 +1,7 @@
 package com.github.williamjbf.gestaocontasdomesticas.security;
 
+import com.github.williamjbf.gestaocontasdomesticas.infraestrutura.cors.SimpleCORSFilter;
+import com.github.williamjbf.gestaocontasdomesticas.security.filters.SecurityFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,10 +22,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class WebSecurityConfig {
 
     private final SecurityFilter securityFilter;
+    private final SimpleCORSFilter simpleCORSFilter;
 
     @Autowired
-    public WebSecurityConfig(final SecurityFilter securityFilter) {
+    public WebSecurityConfig(final SecurityFilter securityFilter,
+                             final SimpleCORSFilter simpleCORSFilter) {
         this.securityFilter = securityFilter;
+        this.simpleCORSFilter = simpleCORSFilter;
     }
 
     @Bean
@@ -36,6 +41,7 @@ public class WebSecurityConfig {
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(simpleCORSFilter, SecurityFilter.class)
                 .build();
     }
 

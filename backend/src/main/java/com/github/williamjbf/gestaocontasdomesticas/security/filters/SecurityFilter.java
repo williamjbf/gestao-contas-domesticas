@@ -1,5 +1,6 @@
-package com.github.williamjbf.gestaocontasdomesticas.security;
+package com.github.williamjbf.gestaocontasdomesticas.security.filters;
 
+import com.github.williamjbf.gestaocontasdomesticas.security.JwtUtil;
 import com.github.williamjbf.gestaocontasdomesticas.security.usuario.service.UsuarioService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

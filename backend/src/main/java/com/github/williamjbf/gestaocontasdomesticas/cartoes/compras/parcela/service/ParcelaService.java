@@ -6,6 +6,8 @@ import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.repository.C
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.parcela.Parcela;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.util.List;
 
 @Service
@@ -21,6 +23,7 @@ public class ParcelaService {
         this.compraRepository = compraRepository;
     }
 
+    @Transactional
     public void definirPagamento(final Long idParcela, final StatusPagamento statusPagamento, final Long idUsuario) {
 
         if (statusPagamento.isPago()) {
@@ -31,9 +34,10 @@ public class ParcelaService {
     }
 
     private void processParcelaAsPago(final Long idParcela, final Long idUsuario) {
-        final Long idCompra = this.repository.updatePagaByIdReturningIdCompra(idParcela, true, idUsuario);
+        this.repository.updatePagaById(idParcela, true, idUsuario);
 
         // se todas as parcelas estiverem pagas, então a Compra foi totalmente paga
+        final Long idCompra = this.repository.findIdCompraById(idParcela, idUsuario);
         final List<Parcela> parcelasDaCompra = this.repository.recuperaTodasParcelasByIdCompra(idCompra, idUsuario);
 
         boolean todasPagas = parcelasDaCompra.stream()
@@ -45,8 +49,10 @@ public class ParcelaService {
     }
 
     private void processParcelaAsNaoPaga(final Long idParcela, final Long idUsuario) {
-        final Long idCompra = this.repository.updatePagaByIdReturningIdCompra(idParcela, false, idUsuario);
+        this.repository.updatePagaById(idParcela, false, idUsuario);
+
         // Se uma das parcelas não estiver paga então a Compra ainda não foi totalmente paga
+        final Long idCompra = this.repository.findIdCompraById(idParcela, idUsuario);
         this.compraRepository.updatePagaById(idCompra, false, idUsuario);
     }
 

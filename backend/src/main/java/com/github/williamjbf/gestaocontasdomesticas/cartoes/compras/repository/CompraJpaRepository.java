@@ -17,7 +17,7 @@ public interface CompraJpaRepository extends JpaRepository<Compra, Long> {
      * Query que atualize a t_compra se uma das suas t_parcelas tenha id = idParcela
      */
     @Modifying
-    @Query(nativeQuery = true, value = "UPDATE t_compra compra SET compra.paga = ?2 WHERE id = ?1 and id_usuario = ?3")
+    @Query(nativeQuery = true, value = "UPDATE t_compra SET paga = ?2 WHERE id = ?1 AND id_usuario = ?3")
     void updatePagaById(final Long IdCompra, final boolean paga, final Long idUsuario);
 
 }

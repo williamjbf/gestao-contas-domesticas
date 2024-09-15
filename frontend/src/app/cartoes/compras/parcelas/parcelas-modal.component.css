@@ -75,3 +75,53 @@ button:hover {
   text-decoration: none;
   cursor: pointer;
 }
+
+.btn-paga {
+  background-color: blue;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.btn-paga:hover {
+  background-color: darkblue;
+}
+
+.btn-nao-paga {
+  background-color: red;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.btn-nao-paga:hover {
+  background-color: darkred;
+}
+
+/* Suave cor azul que indica que a Parcela foi paga */
+.linha-paga {
+  background-color: #e0f7fa;
+}
+
+.linha-paga:nth-child(even) {
+  background-color: #d0eef2; /* Cor ligeiramente diferente para linhas pares */
+}
+
+.linha-paga:hover {
+  background-color: #c0e7ec; /* Cor diferente ao passar o mouse */
+}
+
+/* Suave cor vermelha que indica que a data de pagamento da Parcela expirou */
+.linha-vencida {
+  background-color: #ffebee;
+}
+
+.linha-vencida:nth-child(even) {
+  background-color: #fcdcdc; /* Cor ligeiramente diferente para linhas pares */
+}
+
+.linha-vencida:hover {
+  background-color: #f9caca; /* Cor diferente ao passar o mouse */
+}

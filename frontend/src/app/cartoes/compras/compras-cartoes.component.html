@@ -64,6 +64,7 @@
           <br>
           Pagas / Total
         </th>
+        <th>Paga</th>
         <th>Ações</th>
       </tr>
       </thead>
@@ -74,7 +75,8 @@
         <td>{{ compra.valor }}</td>
         <td> {{ formatarData(compra.dataCompra) }}</td>
         <td>{{ compra.cartao.descricao }}</td>
-        <td>{{ compra.parcelas.length === 0 ? "Sem Parcelas" : "0 / " + compra.parcelas.length }}</td>
+        <td>{{ compra.parcelas.length === 0 ? "Sem Parcelas" : quantidadeParcelasPagas(compra.parcelas) + " / " + compra.parcelas.length }}</td>
+        <td>{{ compra.paga ? 'Paga' : 'Não Paga' }}</td>
         <td>
           <button (click)="editarCompra(compra)">Editar</button>
           <br>

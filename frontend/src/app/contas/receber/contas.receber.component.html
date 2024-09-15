@@ -1,6 +1,6 @@
 <div class="container">
   <h2>Contas a Receber</h2>
-  <form [formGroup]="contaForm" (ngSubmit)="addReceita()">
+  <form [formGroup]="contaForm" (ngSubmit)="addOrUpdateConta()">
     <label for="descricao">Descrição:</label>
     <input id="descricao" formControlName="descricao" required>
     <div *ngIf="contaForm.get('descricao')?.invalid && contaForm.get('descricao')?.touched">
@@ -16,16 +16,16 @@
       O valor é obrigatório.
     </div>
 
-    <label for="recebimento">Data de Recebimento:</label>
-    <input id="recebimento" type="date" formControlName="recebimento" required>
-    <div *ngIf="contaForm.get('recebimento')?.invalid && contaForm.get('recebimento')?.touched">
+    <label for="data">Data de Recebimento:</label>
+    <input id="data" type="date" formControlName="data" required>
+    <div *ngIf="contaForm.get('data')?.invalid && contaForm.get('data')?.touched">
       A data de recebimento é obrigatória.
     </div>
 
     <label for="status">Status:</label>
     <select id="status" formControlName="status" required>
-      <option value="pendente">Pendente</option>
-      <option value="recebido">Recebido</option>
+      <option value="PENDENTE">Pendente</option>
+      <option value="RECEBIDO">Recebido</option>
     </select>
     <div *ngIf="contaForm.get('status')?.invalid && contaForm.get('status')?.touched">
       O status é obrigatório.
@@ -33,8 +33,8 @@
 
     <label for="categoria">Categoria:</label>
     <select id="categoria" formControlName="categoria">
-      <option value="salario">Salário</option>
-      <option value="investimentos">Investimentos</option>
+      <option value="SALÁRIO">Salário</option>
+      <option value="INVESTIMENTO">Investimentos</option>
       <!-- Adicione mais categorias conforme necessário -->
     </select>
 
@@ -42,11 +42,32 @@
   </form>
 
   <div *ngIf="receitas.length > 0">
-    <h3>Receitas Registradas</h3>
-    <ul>
-      <li *ngFor="let receita of receitas">
-        {{ receita.descricao }} - {{ receita.valor }} - {{ receita.recebimento }} - {{ receita.status }}
-      </li>
-    </ul>
+    <h3>Cartões Cadastrados</h3>
+    <table>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Descrição</th>
+        <th>valor</th>
+        <th>Data Recebimento</th>
+        <th>Status</th>
+        <th>Ações</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let receita of receitas">
+        <td>{{ receita.id }}</td>
+        <td>{{ receita.descricao }}</td>
+        <td>{{ receita.valor }}</td>
+        <td>{{ formatarData(receita.data) }}</td>
+        <td>{{ receita.status }}</td>
+
+        <td>
+          <button (click)="editarConta(receita)">Editar</button>
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
+
 </div>

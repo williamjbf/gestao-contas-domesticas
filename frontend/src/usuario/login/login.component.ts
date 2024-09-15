@@ -46,4 +46,8 @@ export class LoginComponent {
     this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
   }
 
+  redirecionarCadastro() {
+    this.router.navigate(["/cadastro"])
+  }
+
 }

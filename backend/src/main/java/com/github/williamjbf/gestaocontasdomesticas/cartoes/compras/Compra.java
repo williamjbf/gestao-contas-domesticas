@@ -1,10 +1,9 @@
 package com.github.williamjbf.gestaocontasdomesticas.cartoes.compras;
 
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.Cartao;
+import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.parcela.Parcela;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -35,5 +34,7 @@ public class Compra {
     @OneToMany(cascade = jakarta.persistence.CascadeType.ALL)
     @JoinColumn(name = "id_compra", nullable = false)
     private List<Parcela> parcelas;
+
+    private boolean paga;
 
 }

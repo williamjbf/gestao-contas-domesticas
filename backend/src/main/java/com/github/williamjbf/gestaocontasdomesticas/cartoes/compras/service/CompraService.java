@@ -1,11 +1,11 @@
 package com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.service;
 
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.Compra;
-import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.Parcela;
+import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.parcela.Parcela;
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.dto.CriarCompraDTO;
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.dto.EditarCompraDTO;
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.repository.CompraJpaRepository;
-import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.repository.ParcelaJpaRepository;
+import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.parcela.repository.ParcelaJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

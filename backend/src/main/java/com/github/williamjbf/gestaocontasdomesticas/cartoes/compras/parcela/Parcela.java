@@ -1,4 +1,4 @@
-package com.github.williamjbf.gestaocontasdomesticas.cartoes.compras;
+package com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.parcela;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -26,8 +26,10 @@ public class Parcela {
 
     private long ordem;
 
+    private boolean paga;
+
     public static Parcela of(final BigDecimal valor, final LocalDate dataCobranca, final long ordem) {
-        return new Parcela(null, valor, dataCobranca, ordem);
+        return new Parcela(null, valor, dataCobranca, ordem, false);
     }
 
 }

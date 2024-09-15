@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface ContasJpaRepository extends JpaRepository<Conta, Long> {
@@ -15,4 +16,5 @@ public interface ContasJpaRepository extends JpaRepository<Conta, Long> {
 
     List<Conta> findAllByTipoContaAndStatusAndIdUsuario(final TipoConta tipoConta, final Status status, final Long idUsuario);
 
+    List<Conta> findAllByTipoContaAndStatus(final TipoConta tipoConta, final Status status);
 }

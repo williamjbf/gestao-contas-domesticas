@@ -11,7 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -45,6 +48,18 @@ public class ContasAPagarService {
         return contasPendentes.stream()
                 .filter(conta -> !conta.getData().isAfter(dataLimiteVencimento))
                 .collect(Collectors.toList());
+    }
+
+    public Map<Long, List<Conta>> recuperarContasProximasAoVencimento(final Long diasParaVencimento) {
+
+        final List<Conta> contasPendentes = repository
+                .findAllByTipoContaAndStatus(TipoConta.CONTA_A_PAGAR, Status.PENDENTE);
+
+        final LocalDate dataLimiteVencimento = LocalDate.now().plusDays(diasParaVencimento);
+
+        return contasPendentes.stream()
+                .filter(conta -> !conta.getData().isAfter(dataLimiteVencimento))
+                .collect(Collectors.groupingBy(Conta::getIdUsuario));
     }
 
     public Conta atualizarConta(final AtualizarContaAPagarDTO contaDTO, final Long idUsuario) {

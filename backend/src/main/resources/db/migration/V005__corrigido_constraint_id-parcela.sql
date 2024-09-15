@@ -1,0 +1,1 @@
+alter table "t_parcela" rename constraint "parcela`_pk" to "parcela_pk";

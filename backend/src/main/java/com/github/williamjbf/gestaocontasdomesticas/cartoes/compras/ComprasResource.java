@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/cartoes/compras")
+@RequestMapping("/api/cartoes")
 public class ComprasResource {
 
     private final CompraService service;
@@ -22,7 +22,7 @@ public class ComprasResource {
         this.service = service;
     }
 
-    @PostMapping
+    @PostMapping("/compras")
     public ResponseEntity adicionarCompra(@Valid @RequestBody final CriarCompraDTO compraDTO) {
 
         service.adicionarCompra(compraDTO);
@@ -30,7 +30,7 @@ public class ComprasResource {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @GetMapping
+    @GetMapping("/compras")
     public ResponseEntity listarCompras() {
         final List<Compra> compras = service.listarCompras();
 
@@ -41,7 +41,7 @@ public class ComprasResource {
         return ResponseEntity.ok(compras);
     }
 
-    @PutMapping
+    @PutMapping("/compras")
     public ResponseEntity editarCompra(@Valid @RequestBody final EditarCompraDTO compraDTO) {
 
         final Compra compra = service.editarCompra(compraDTO);
@@ -50,7 +50,7 @@ public class ComprasResource {
     }
 
 
-    @GetMapping("/{idCartao}")
+    @GetMapping("/{idCartao}/compras")
     public ResponseEntity<List<Compra>> buscarComprasPorCartao(@PathVariable(name = "idCartao") final Long idCartao){
 
         final List<Compra> compras = service.buscarComprasPorCartao(idCartao);

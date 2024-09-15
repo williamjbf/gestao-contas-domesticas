@@ -17,16 +17,25 @@ public class CriarCompraDTO implements Serializable {
     @NotNull
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCompra;
+
     @NotNull
     private BigDecimal valor;
+
     @NotNull
     private String descricao;
+
     @NotNull
     private Categoria categoria;
 
     @Valid
     @NotNull
     private CriarCompraCartaoDTO cartao;
+
+    private Integer quantidadeParcelas;
+
+    public boolean isParcelada() {
+        return this.quantidadeParcelas != null && this.quantidadeParcelas > 1;
+    }
 
     public Compra toCompra() {
         final Compra compra = new Compra();

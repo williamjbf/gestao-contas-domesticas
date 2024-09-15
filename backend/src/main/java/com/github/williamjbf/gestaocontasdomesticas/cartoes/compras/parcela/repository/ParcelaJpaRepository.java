@@ -12,14 +12,14 @@ import java.util.List;
 public interface ParcelaJpaRepository extends JpaRepository<Parcela, Long>  {
 
     @Modifying
-    @Query(nativeQuery = true, value = "DELETE FROM t_parcela WHERE id_compra = ?1")
-    void deleteByCompraId(final Long idCompra);
+    @Query(nativeQuery = true, value = "DELETE FROM t_parcela WHERE id_compra = ?1 and id_usuario = ?2")
+    void deleteByCompraId(final Long idCompra, final Long idUsuario);
 
     @Modifying
-    @Query(nativeQuery = true, value = "UPDATE t_parcela SET paga=?2 WHERE id = ?1 RETURNING id_compra")
-    Long updatePagaByIdReturningIdCompra(final Long idParcela, final boolean paga);
+    @Query(nativeQuery = true, value = "UPDATE t_parcela SET paga=?2 WHERE id = ?1 and id_usuario = ?3 RETURNING id_compra")
+    Long updatePagaByIdReturningIdCompra(final Long idParcela, final boolean paga, final Long idUsuario);
 
-    @Query(nativeQuery = true, value = "SELECT * FROM t_parcela WHERE id_compra = ?1")
-    List<Parcela> recuperaTodasParcelasByIdCompra(final Long idCompra);
+    @Query(nativeQuery = true, value = "SELECT * FROM t_parcela WHERE id_compra = ?1 and id_usuario = ?2")
+    List<Parcela> recuperaTodasParcelasByIdCompra(final Long idCompra, final Long idUsuario);
 
 }

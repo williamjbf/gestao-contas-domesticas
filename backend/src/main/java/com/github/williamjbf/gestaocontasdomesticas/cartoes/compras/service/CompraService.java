@@ -30,8 +30,9 @@ public class CompraService {
     }
 
     @Transactional
-    public void adicionarCompra(final CriarCompraDTO compraDTO) {
+    public void adicionarCompra(final CriarCompraDTO compraDTO, final Long idUsuario) {
         final Compra compraToPersist = compraDTO.toCompra();
+        compraToPersist.setIdUsuario(idUsuario);
 
         if (compraDTO.isParcelada()) {
             this.generateParcelas(compraToPersist, compraDTO.getQuantidadeParcelas());
@@ -81,7 +82,8 @@ public class CompraService {
             final Parcela parcela = Parcela.of(
                     valorAtual,
                     dataCompra.plusMonths(i - 1),
-                    i
+                    i,
+                    compraToGenerate.getIdUsuario()
             );
             parcelas.add(parcela);
         }
@@ -89,22 +91,23 @@ public class CompraService {
         compraToGenerate.setParcelas(parcelas);
     }
 
-    public List<Compra> listarCompras() {
-        final List<Compra> compras = repository.findAll();
+    public List<Compra> listarCompras(final Long idUsuario) {
+        final List<Compra> compras = repository.findAllByIdUsuario(idUsuario);
 
         return compras;
     }
 
     @Transactional
-    public Compra editarCompra(final EditarCompraDTO compraDTO) {
+    public Compra editarCompra(final EditarCompraDTO compraDTO, final Long idUsuario) {
         final Compra compraToUpdate = compraDTO.toCompra();
+        compraToUpdate.setIdUsuario(idUsuario);
 
         /**
          * para uma implementação mais simples e rápida apenas estou removendo todas as parcelas
          * e as re-criando se necessário. Em uma implementação mais robusta e otimizada eu
          * poderia re-utilizar as parcelas já criadas e apenas refletir as alterações
          */
-        parcelaRepository.deleteByCompraId(compraToUpdate.getId());
+        parcelaRepository.deleteByCompraId(compraToUpdate.getId(), compraToUpdate.getIdUsuario());
 
         if (compraDTO.isParcelada()) {
             this.generateParcelas(compraToUpdate, compraDTO.getQuantidadeParcelas());
@@ -113,8 +116,8 @@ public class CompraService {
         return repository.save(compraToUpdate);
     }
 
-    public List<Compra> buscarComprasPorCartao(final Long idCartao) {
-        final List<Compra> compras = repository.findAllByCartao_Id(idCartao);
+    public List<Compra> buscarComprasPorCartao(final Long idCartao, final Long idUsuario) {
+        final List<Compra> compras = repository.findAllByCartao_IdAndIdUsuario(idCartao,idUsuario);
 
         return compras;
     }

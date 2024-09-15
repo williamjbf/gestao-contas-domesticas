@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -25,17 +24,21 @@ public class ContasAPagarService {
         this.repository = repository;
     }
 
-    public void salvarConta(final ContaAPagarDTO contaAPagarDTO) {
-        repository.save(contaAPagarDTO.toConta());
+    public void salvarConta(final ContaAPagarDTO contaAPagarDTO, final Long idUsuario) {
+        final Conta conta = contaAPagarDTO.toConta();
+        conta.setIdUsuario(idUsuario);
+
+        repository.save(conta);
     }
 
     @Transactional(readOnly = true)
-    public List<Conta> listarTodas() {
-        return repository.findAllByTipoConta(TipoConta.CONTA_A_PAGAR);
+    public List<Conta> listarTodas(final Long idUsuario) {
+        return repository.findAllByTipoContaAndIdUsuario(TipoConta.CONTA_A_PAGAR, idUsuario);
     }
 
-    public List<Conta> listarContasProximasAoVencimento(final Long diasParaVencimento) {
-        final List<Conta> contasPendentes = repository.findAllByTipoContaAndStatus(TipoConta.CONTA_A_PAGAR, Status.PENDENTE);
+    public List<Conta> listarContasProximasAoVencimento(final Long diasParaVencimento, final Long idUsuario) {
+        final List<Conta> contasPendentes = repository
+                .findAllByTipoContaAndStatusAndIdUsuario(TipoConta.CONTA_A_PAGAR, Status.PENDENTE, idUsuario);
 
         final LocalDate dataLimiteVencimento = LocalDate.now().plusDays(diasParaVencimento);
 
@@ -44,7 +47,10 @@ public class ContasAPagarService {
                 .collect(Collectors.toList());
     }
 
-    public Conta atualizarConta(final AtualizarContaAPagarDTO contaDTO) {
-        return repository.save(contaDTO.toConta());
+    public Conta atualizarConta(final AtualizarContaAPagarDTO contaDTO, final Long idUsuario) {
+        final Conta conta = contaDTO.toConta();
+        conta.setIdUsuario(idUsuario);
+
+        return repository.save(conta);
     }
 }

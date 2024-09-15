@@ -1,5 +1,6 @@
 package com.github.williamjbf.gestaocontasdomesticas.security.authentication;
 
+import com.github.williamjbf.gestaocontasdomesticas.security.authentication.login.LoginService;
 import com.github.williamjbf.gestaocontasdomesticas.security.usuario.service.UsuarioService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,17 +16,19 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthenticationResource {
 
     private final UsuarioService usuarioService;
+    private final LoginService loginService;
 
     @Autowired
-    public AuthenticationResource(final UsuarioService usuarioService) {
+    public AuthenticationResource(final UsuarioService usuarioService, final LoginService loginService) {
         this.usuarioService = usuarioService;
+        this.loginService = loginService;
     }
 
 
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody @Valid AuthenticationDTO authenticationDTO){
 
-        final LoginResponseDTO login = usuarioService.login(authenticationDTO);
+        final LoginResponseDTO login = loginService.login(authenticationDTO);
 
         return ResponseEntity.ok(login);
     }

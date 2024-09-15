@@ -37,4 +37,6 @@ public class Compra {
 
     private boolean paga;
 
+    private Long idUsuario;
+
 }

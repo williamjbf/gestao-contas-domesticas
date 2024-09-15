@@ -25,5 +25,5 @@ public class Conta implements Serializable {
     @Column(name = "tipo_conta")
     @Enumerated(EnumType.STRING)
     private TipoConta tipoConta;
-
+    private Long idUsuario;
 }

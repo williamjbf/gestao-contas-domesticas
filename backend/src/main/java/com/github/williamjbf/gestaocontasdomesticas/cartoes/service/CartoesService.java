@@ -19,18 +19,22 @@ public class CartoesService {
         this.repository = repository;
     }
 
-    public void criarCartao(final CriarCartaoDTO cartaoDTO) {
-        repository.save(cartaoDTO.toCartao());
+    public void criarCartao(final CriarCartaoDTO cartaoDTO, final Long idUsuario) {
+        final Cartao cartao = cartaoDTO.toCartao();
+        cartao.setIdUsuario(idUsuario);
+
+        repository.save(cartao);
     }
 
-    public List<Cartao> listarCartoes() {
-        final List<Cartao> cartoes = repository.findAll();
+    public List<Cartao> listarCartoes(final Long idUsuario) {
+        final List<Cartao> cartoes = repository.findAllByIdUsuario(idUsuario);
         return cartoes;
     }
 
-    public Cartao editarCartao(final AtualizarCartaoDTO cartaoDTO) {
-        final Cartao cartao = repository.save(cartaoDTO.toCartao());
+    public Cartao editarCartao(final AtualizarCartaoDTO cartaoDTO, final Long idUsuario) {
+        final Cartao cartao = cartaoDTO.toCartao();
+        cartao.setIdUsuario(idUsuario);
 
-        return cartao;
+        return repository.save(cartao);
     }
 }

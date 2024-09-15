@@ -11,8 +11,8 @@ import java.util.List;
 @Repository
 public interface ContasJpaRepository extends JpaRepository<Conta, Long> {
 
-    List<Conta> findAllByTipoConta(final TipoConta tipoConta);
+    List<Conta> findAllByTipoContaAndIdUsuario(final TipoConta tipoConta, final Long idUsuario);
 
-    List<Conta> findAllByTipoContaAndStatus(final TipoConta tipoConta, final Status status);
+    List<Conta> findAllByTipoContaAndStatusAndIdUsuario(final TipoConta tipoConta, final Status status, final Long idUsuario);
 
 }

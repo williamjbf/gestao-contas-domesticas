@@ -21,16 +21,22 @@ public class ContasAReceberService {
         this.repository = repository;
     }
 
-    public void salvarConta(final ContaAReceberDTO contaAReceberDTO) {
-        repository.save(contaAReceberDTO.toConta());
+    public void salvarConta(final ContaAReceberDTO contaAReceberDTO, final Long idUsuario) {
+        final Conta conta = contaAReceberDTO.toConta();
+        conta.setIdUsuario(idUsuario);
+
+        repository.save(conta);
     }
 
     @Transactional(readOnly = true)
-    public List<Conta> listarTodas() {
-        return repository.findAllByTipoConta(TipoConta.CONTA_A_RECEBER);
+    public List<Conta> listarTodas(final Long idUsuario) {
+        return repository.findAllByTipoContaAndIdUsuario(TipoConta.CONTA_A_RECEBER, idUsuario);
     }
 
-    public Conta atualizarConta(final AtualizarContaAReceberDTO contaDTO) {
-        return repository.save(contaDTO.toConta());
+    public Conta atualizarConta(final AtualizarContaAReceberDTO contaDTO, final Long idUsuario) {
+        final Conta conta = contaDTO.toConta();
+        conta.setIdUsuario(idUsuario);
+
+        return repository.save(conta);
     }
 }

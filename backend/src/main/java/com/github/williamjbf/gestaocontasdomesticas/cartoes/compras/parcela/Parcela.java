@@ -28,8 +28,10 @@ public class Parcela {
 
     private boolean paga;
 
-    public static Parcela of(final BigDecimal valor, final LocalDate dataCobranca, final long ordem) {
-        return new Parcela(null, valor, dataCobranca, ordem, false);
+    private Long idUsuario;
+
+    public static Parcela of(final BigDecimal valor, final LocalDate dataCobranca, final long ordem, final Long idUsuario) {
+        return new Parcela(null, valor, dataCobranca, ordem, false, idUsuario);
     }
 
 }

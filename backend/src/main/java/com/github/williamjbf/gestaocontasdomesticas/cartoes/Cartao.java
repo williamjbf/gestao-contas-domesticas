@@ -19,4 +19,5 @@ public class Cartao implements Serializable {
 
     private String descricao;
     private BigDecimal limite;
+    private Long idUsuario;
 }

@@ -21,32 +21,33 @@ public class ParcelaService {
         this.compraRepository = compraRepository;
     }
 
-    public void definirPagamento(final Long idParcela, final StatusPagamento statusPagamento) {
+    public void definirPagamento(final Long idParcela, final StatusPagamento statusPagamento, final Long idUsuario) {
+
         if (statusPagamento.isPago()) {
-            this.processParcelaAsPago(idParcela);
+            this.processParcelaAsPago(idParcela, idUsuario);
         } else {
-            this.processParcelaAsNaoPaga(idParcela);
+            this.processParcelaAsNaoPaga(idParcela, idUsuario);
         }
     }
 
-    private void processParcelaAsPago(final Long idParcela) {
-        final Long idCompra = this.repository.updatePagaByIdReturningIdCompra(idParcela, true);
+    private void processParcelaAsPago(final Long idParcela, final Long idUsuario) {
+        final Long idCompra = this.repository.updatePagaByIdReturningIdCompra(idParcela, true, idUsuario);
 
         // se todas as parcelas estiverem pagas, então a Compra foi totalmente paga
-        final List<Parcela> parcelasDaCompra = this.repository.recuperaTodasParcelasByIdCompra(idCompra);
+        final List<Parcela> parcelasDaCompra = this.repository.recuperaTodasParcelasByIdCompra(idCompra, idUsuario);
 
         boolean todasPagas = parcelasDaCompra.stream()
                 .allMatch(Parcela::isPaga);
 
         if (todasPagas) {
-            this.compraRepository.updatePagaById(idCompra, true);
+            this.compraRepository.updatePagaById(idCompra, true, idUsuario);
         }
     }
 
-    private void processParcelaAsNaoPaga(final Long idParcela) {
-        final Long idCompra = this.repository.updatePagaByIdReturningIdCompra(idParcela, false);
+    private void processParcelaAsNaoPaga(final Long idParcela, final Long idUsuario) {
+        final Long idCompra = this.repository.updatePagaByIdReturningIdCompra(idParcela, false, idUsuario);
         // Se uma das parcelas não estiver paga então a Compra ainda não foi totalmente paga
-        this.compraRepository.updatePagaById(idCompra, false);
+        this.compraRepository.updatePagaById(idCompra, false, idUsuario);
     }
 
 }

@@ -5,8 +5,10 @@ import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.Parcela;
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.dto.CriarCompraDTO;
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.dto.EditarCompraDTO;
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.repository.CompraJpaRepository;
+import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.repository.ParcelaJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -18,12 +20,16 @@ import java.util.ArrayList;
 public class CompraService {
 
     private final CompraJpaRepository repository;
+    private final ParcelaJpaRepository parcelaRepository;
 
     @Autowired
-    public CompraService(final CompraJpaRepository repository) {
+    public CompraService(final CompraJpaRepository repository,
+                         final ParcelaJpaRepository parcelaRepository) {
         this.repository = repository;
+        this.parcelaRepository = parcelaRepository;
     }
 
+    @Transactional
     public void adicionarCompra(final CriarCompraDTO compraDTO) {
         final Compra compraToPersist = compraDTO.toCompra();
 
@@ -89,17 +95,28 @@ public class CompraService {
         return compras;
     }
 
+    @Transactional
     public Compra editarCompra(final EditarCompraDTO compraDTO) {
-        final Compra compra = repository.save(compraDTO.toCompra());
+        final Compra compraToUpdate = compraDTO.toCompra();
 
-        return compra;
+        /**
+         * para uma implementação mais simples e rápida apenas estou removendo todas as parcelas
+         * e as re-criando se necessário. Em uma implementação mais robusta e otimizada eu
+         * poderia re-utilizar as parcelas já criadas e apenas refletir as alterações
+         */
+        parcelaRepository.deleteByCompraId(compraToUpdate.getId());
+
+        if (compraDTO.isParcelada()) {
+            this.generateParcelas(compraToUpdate, compraDTO.getQuantidadeParcelas());
+        }
+
+        return repository.save(compraToUpdate);
     }
 
     public List<Compra> buscarComprasPorCartao(final Long idCartao) {
-
         final List<Compra> compras = repository.findAllByCartao_Id(idCartao);
 
         return compras;
     }
-    
+
 }

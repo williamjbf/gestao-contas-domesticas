@@ -1,0 +1,25 @@
+<div *ngIf="showModal" class="modal">
+  <div class="modal-content">
+    <span class="close" (click)="closeModal()">&times;</span>
+    <h2>Parcelas da Compra</h2>
+    <table>
+      <caption>Lista de Parcelas da Compra Selecionada</caption>
+      <thead>
+      <tr>
+        <th>ID</th>
+        <th>Valor</th>
+        <th>Data de Cobrança</th>
+        <th>Ações</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let parcela of parcelas">
+        <td>{{ parcela.id }}</td>
+        <td>{{ parcela.valor }}</td>
+        <td>{{ formatarData(parcela.dataCobranca) }}</td>
+        <td><button>Marcar como Paga</button></td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,6 +1,6 @@
 <div class="container">
   <h2>Compras com Cartão de Crédito</h2>
-  <form [formGroup]="compraForm" (ngSubmit)="addOrUpdateCompra()">
+  <form #compraFormElement="ngForm" [formGroup]="compraForm" (ngSubmit)="addOrUpdateCompra()">
     <label for="descricao">Descrição:</label>
     <input id="descricao" formControlName="descricao" required>
     <div *ngIf="compraForm.get('descricao')?.invalid && compraForm.get('descricao')?.touched">
@@ -14,6 +14,12 @@
     </div>
     <div *ngIf="compraForm.get('valor')?.invalid && compraForm.get('valor')?.touched && !compraForm.get('valor')?.hasError('negativeValue')">
       O valor é obrigatório.
+    </div>
+
+    <label for="quantidadeParcelas">Quantidade de Parcelas:</label>
+    <input id="quantidadeParcelas" type="number" formControlName="quantidadeParcelas" required>
+    <div *ngIf="compraForm.get('quantidadeParcelas')?.hasError('negativeValue')">
+      A quantidade de Parcelas não pode ser negativa.
     </div>
 
     <label for="dataCompra">Data da Compra:</label>
@@ -53,6 +59,11 @@
         <th>Valor</th>
         <th>Data de Compra</th>
         <th>Cartão</th>
+        <th>
+          Parcelas
+          <br>
+          Pagas / Total
+        </th>
         <th>Ações</th>
       </tr>
       </thead>
@@ -63,11 +74,21 @@
         <td>{{ compra.valor }}</td>
         <td> {{ formatarData(compra.dataCompra) }}</td>
         <td>{{ compra.cartao.descricao }}</td>
+        <td>{{ compra.parcelas.length === 0 ? "Sem Parcelas" : "0 / " + compra.parcelas.length }}</td>
         <td>
           <button (click)="editarCompra(compra)">Editar</button>
+          <br>
+          <button *ngIf="compra.parcelas.length > 0" (click)="verParcelas(compra)">Ver Parcelas</button>
         </td>
       </tr>
       </tbody>
     </table>
   </div>
+
+  <!-- Modal de Parcelas de uma Compra -->
+  <app-parcelas-modal
+    [parcelas]="parcelas"
+    [showModal]="showModal"
+    (closeModalEvent)="closeModal()">
+  </app-parcelas-modal>
 </div>

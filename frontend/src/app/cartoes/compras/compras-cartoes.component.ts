@@ -7,6 +7,7 @@ import { Cartao } from "../models/cartao.model";
 import { Compra } from "./models/compra.model";
 import { CartaoService } from "../api.cartoes.service";
 import {ActivatedRoute} from "@angular/router";
+import {ParcelasModalComponent} from "./parcelas/parcelas-modal.component";
 
 @Component({
   selector: 'app-compras-cartao-credito',
@@ -17,7 +18,8 @@ import {ActivatedRoute} from "@angular/router";
     FormsModule,
     NgIf,
     NgForOf,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ParcelasModalComponent
   ],
   providers: [DatePipe]
 })
@@ -27,6 +29,8 @@ export class ComprasCartoesComponent {
   cartoes: Cartao[] = [];
   editingId: number | null = null;
   idActualCartao: number | null = null;
+  showModal: boolean = false;
+  parcelas: any[] = [];
 
   constructor(private fb: FormBuilder,
               private service: ComprasService,
@@ -36,6 +40,7 @@ export class ComprasCartoesComponent {
     this.compraForm = this.fb.group({
       descricao: ['', Validators.required],
       valor: [null, [Validators.required, negativeValueValidator()]],
+      quantidadeParcelas: [0, []],
       dataCompra: ['', Validators.required],
       categoria: ['', Validators.required],
       cartao: [this.idActualCartao, Validators.required]
@@ -98,6 +103,7 @@ export class ComprasCartoesComponent {
     this.editingId = compra.id;
     this.compraForm.patchValue({
       ...compra,
+      quantidadeParcelas: compra.parcelas.length,
       cartao: compra.cartao.id
     });
   }
@@ -110,6 +116,16 @@ export class ComprasCartoesComponent {
     this.compraForm.patchValue({
       cartao: this.idActualCartao
     });
+  }
+
+  async verParcelas(compra: Compra) {
+    // Ordena as parcelas com base no atributo ordem
+    this.parcelas = compra.parcelas.sort((a, b) => a.ordem - b.ordem);
+    this.showModal = true;
+  }
+
+  closeModal() {
+    this.showModal = false;
   }
 
 }

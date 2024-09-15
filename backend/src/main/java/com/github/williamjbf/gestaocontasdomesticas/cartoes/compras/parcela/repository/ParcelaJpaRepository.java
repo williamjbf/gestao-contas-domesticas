@@ -25,4 +25,8 @@ public interface ParcelaJpaRepository extends JpaRepository<Parcela, Long>  {
     @Query(nativeQuery = true, value = "SELECT * FROM t_parcela WHERE id_compra = ?1 and id_usuario = ?2")
     List<Parcela> recuperaTodasParcelasByIdCompra(final Long idCompra, final Long idUsuario);
 
+    @Modifying
+    @Query(nativeQuery = true, value = "UPDATE t_parcela SET paga=?2 WHERE id_compra = ?1 and id_usuario = ?3")
+    void updatePagaByIdCompra(final Long idCompra, final boolean paga, final Long idUsuario);
+
 }

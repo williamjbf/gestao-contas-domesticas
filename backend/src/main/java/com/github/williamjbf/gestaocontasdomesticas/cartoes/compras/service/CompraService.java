@@ -4,9 +4,11 @@ import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.Compra;
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.parcela.Parcela;
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.dto.CriarCompraDTO;
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.dto.EditarCompraDTO;
+import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.dto.StatusPagamento;
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.repository.CompraJpaRepository;
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.parcela.repository.ParcelaJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -92,7 +94,7 @@ public class CompraService {
     }
 
     public List<Compra> listarCompras(final Long idUsuario) {
-        final List<Compra> compras = repository.findAllByIdUsuario(idUsuario);
+        final List<Compra> compras = repository.findAllByIdUsuarioOrderById(idUsuario);
 
         return compras;
     }
@@ -117,9 +119,33 @@ public class CompraService {
     }
 
     public List<Compra> buscarComprasPorCartao(final Long idCartao, final Long idUsuario) {
-        final List<Compra> compras = repository.findAllByCartao_IdAndIdUsuario(idCartao,idUsuario);
+        final List<Compra> compras = repository.findAllByCartao_IdAndIdUsuarioOrderById(idCartao, idUsuario);
 
         return compras;
+    }
+
+    @Transactional
+    public void definirPagamento(final Long idCompra, final StatusPagamento statusPagamento, final Long idUsuario) {
+
+        if (statusPagamento.isPago()) {
+            this.processCompraAsPago(idCompra, idUsuario);
+        } else {
+            this.processCompraAsNaoPaga(idCompra, idUsuario);
+        }
+    }
+
+    private void processCompraAsPago(final Long idCompra, final Long idUsuario) {
+        this.repository.updatePagaById(idCompra, true, idUsuario);
+
+        // se Compra está paga todas as suas Parcelas devem estar pagas
+        this.parcelaRepository.updatePagaByIdCompra(idCompra, true, idUsuario);
+    }
+
+    private void processCompraAsNaoPaga(final Long idCompra, final Long idUsuario) {
+        this.repository.updatePagaById(idCompra, false, idUsuario);
+
+        // Se uma Compra for marcada como não paga, todas as suas Parcelas são marcadas como não paga
+        this.parcelaRepository.updatePagaByIdCompra(idCompra, false, idUsuario);
     }
 
 }

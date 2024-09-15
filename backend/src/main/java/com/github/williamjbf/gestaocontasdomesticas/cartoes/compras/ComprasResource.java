@@ -2,6 +2,7 @@ package com.github.williamjbf.gestaocontasdomesticas.cartoes.compras;
 
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.dto.CriarCompraDTO;
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.dto.EditarCompraDTO;
+import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.dto.StatusPagamento;
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.service.CompraService;
 import com.github.williamjbf.gestaocontasdomesticas.security.usuario.service.UsuarioService;
 import jakarta.validation.Valid;
@@ -55,6 +56,15 @@ public class ComprasResource {
         final Compra compra = service.editarCompra(compraDTO, idUsuario);
 
         return ResponseEntity.ok(compra);
+    }
+
+    @PutMapping("/compras/{idCompra}")
+    public ResponseEntity<Void> definirPagamento(@PathVariable(name = "idCompra") final Long idCompra,
+                                                 @Valid @RequestBody final StatusPagamento statusPagamento) {
+        final Long idUsuario = usuarioService.getUsuarioLogado().getId();
+
+        this.service.definirPagamento(idCompra, statusPagamento, idUsuario);
+        return ResponseEntity.ok().build();
     }
 
 

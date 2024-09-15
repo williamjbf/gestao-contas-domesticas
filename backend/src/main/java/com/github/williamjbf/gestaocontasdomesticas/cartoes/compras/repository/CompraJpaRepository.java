@@ -1,6 +1,7 @@
 package com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.repository;
 
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.Compra;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -9,9 +10,9 @@ import java.util.List;
 
 public interface CompraJpaRepository extends JpaRepository<Compra, Long> {
 
-    List<Compra> findAllByIdUsuario(final Long idUsuario);
+    List<Compra> findAllByIdUsuarioOrderById(final Long idUsuario);
 
-    List<Compra> findAllByCartao_IdAndIdUsuario(final Long IdCartao, final Long idUsuario);
+    List<Compra> findAllByCartao_IdAndIdUsuarioOrderById(final Long IdCartao, final Long idUsuario);
 
     /**
      * Query que atualize a t_compra se uma das suas t_parcelas tenha id = idParcela

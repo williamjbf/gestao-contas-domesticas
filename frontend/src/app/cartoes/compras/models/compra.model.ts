@@ -1,4 +1,5 @@
 import {Cartao} from "../../models/cartao.model";
+import {Parcela} from "../parcelas/models/parcela.model";
 
 export interface Compra {
   id: number | null,
@@ -8,12 +9,6 @@ export interface Compra {
   dataCompra: string,
   categoria: string,
   cartao: Cartao,
-  parcelas: Parcela[]
-}
-
-export interface Parcela {
-  id: number | null,
-  valor: number,
-  dataCobranca: string,
-  ordem: number
+  parcelas: Parcela[],
+  paga: boolean
 }

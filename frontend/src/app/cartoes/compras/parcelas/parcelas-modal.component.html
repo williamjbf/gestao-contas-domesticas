@@ -8,16 +8,21 @@
       <tr>
         <th>ID</th>
         <th>Valor</th>
+        <th>Paga</th>
         <th>Data de Cobrança</th>
         <th>Ações</th>
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let parcela of parcelas">
+      <tr *ngFor="let parcela of parcelas" [ngClass]="{'linha-paga': parcela.paga, 'linha-vencida': isVencida(parcela)}">
         <td>{{ parcela.id }}</td>
         <td>{{ parcela.valor }}</td>
+        <td>{{ parcela.paga ? 'Paga' : 'Não Paga' }}</td>
         <td>{{ formatarData(parcela.dataCobranca) }}</td>
-        <td><button>Marcar como Paga</button></td>
+        <td>
+          <button *ngIf="!parcela.paga" class="btn-paga" (click)="marcarPaga(parcela)">Marcar como Paga</button>
+          <button *ngIf="parcela.paga" class="btn-nao-paga" (click)="marcarNaoPaga(parcela)">Marcar como <b>Não</b> Paga</button>
+        </td>
       </tr>
       </tbody>
     </table>

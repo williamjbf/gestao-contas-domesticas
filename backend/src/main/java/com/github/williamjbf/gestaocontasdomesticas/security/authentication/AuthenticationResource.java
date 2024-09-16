@@ -11,6 +11,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * O `AuthenticationResource` é um controlador REST responsável por gerenciar operações de autenticação e cadastro de usuários.
+ *
+ * Este controlador expõe endpoints para permitir que os usuários façam login e se cadastrem no sistema. Ele interage com
+ * os serviços de autenticação e gerenciamento de usuários para realizar essas operações.
+ */
 @RestController
 @RequestMapping("/api/auth")
 public class AuthenticationResource {

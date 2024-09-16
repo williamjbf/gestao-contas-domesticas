@@ -12,7 +12,15 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
-
+/**
+ * `JwtUtil` é um serviço responsável pela geração, extração e validação de tokens JWT (JSON Web Tokens).
+ *
+ * Esta classe fornece métodos para criar tokens JWT, extrair informações dos tokens e validar se um token é
+ * válido e não expirou.
+ *
+ * Os tokens JWT são utilizados para autenticação e autorização, armazenando informações sobre o usuário e garantindo
+ * que as requisições sejam feitas por usuários autenticados.
+ */
 @Service
 public class JwtUtil {
 

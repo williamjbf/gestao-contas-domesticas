@@ -9,6 +9,11 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Entidade que representa uma compra realizada em um cartão de crédito.
+ * Cada compra possui uma data, valor, descrição, categoria, está associada a um cartão e
+ * pode ser parcelada em várias parcelas. Além disso, a compra está vinculada a um usuário.
+ */
 @Data
 @Entity(name = "t_compra")
 public class Compra {

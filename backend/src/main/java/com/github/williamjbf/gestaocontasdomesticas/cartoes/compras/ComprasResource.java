@@ -13,6 +13,14 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Resource REST responsável pelo gerenciamento de compras associadas a cartões de crédito
+ * dos usuários. As compras podem ser adicionadas, listadas, editadas e marcadas como pagas.
+ * Esta classe utiliza o {@link CompraService} para manipulação dos dados e {@link UsuarioService}
+ * para obtenção do usuário autenticado.
+ *
+ * As requisições são mapeadas para o caminho "/api/cartoes/compras" ou "/api/cartoes/{idCartao}/compras".
+ */
 @RestController
 @RequestMapping("/api/cartoes")
 public class ComprasResource {
@@ -80,5 +88,5 @@ public class ComprasResource {
 
         return ResponseEntity.ok(compras);
     }
-    
+
 }

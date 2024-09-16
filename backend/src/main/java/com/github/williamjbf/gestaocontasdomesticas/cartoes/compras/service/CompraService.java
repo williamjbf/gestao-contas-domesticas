@@ -1,22 +1,21 @@
 package com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.service;
 
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.Compra;
-import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.parcela.Parcela;
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.dto.CriarCompraDTO;
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.dto.EditarCompraDTO;
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.dto.StatusPagamento;
-import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.repository.CompraJpaRepository;
+import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.parcela.Parcela;
 import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.parcela.repository.ParcelaJpaRepository;
+import com.github.williamjbf.gestaocontasdomesticas.cartoes.compras.repository.CompraJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.List;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CompraService {
@@ -93,6 +92,7 @@ public class CompraService {
         compraToGenerate.setParcelas(parcelas);
     }
 
+    @Transactional
     public List<Compra> listarCompras(final Long idUsuario) {
         final List<Compra> compras = repository.findAllByIdUsuarioOrderById(idUsuario);
 
@@ -118,6 +118,7 @@ public class CompraService {
         return repository.save(compraToUpdate);
     }
 
+    @Transactional
     public List<Compra> buscarComprasPorCartao(final Long idCartao, final Long idUsuario) {
         final List<Compra> compras = repository.findAllByCartao_IdAndIdUsuarioOrderById(idCartao, idUsuario);
 

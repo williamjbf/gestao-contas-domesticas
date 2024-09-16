@@ -8,6 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Controlador REST responsável por gerenciar as operações relacionadas a parcelas de compras.
+ */
 @RestController
 @RequestMapping("/api/cartoes/compras/parcelas")
 public class ParcelaResource {

@@ -6,6 +6,9 @@ import reactor.core.publisher.Sinks;
 
 import java.util.*;
 
+/**
+ * O `Notificador` é um componente responsável por gerenciar e distribuir notificações para usuários.
+ */
 @Component
 public class Notificador {
 

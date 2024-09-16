@@ -11,6 +11,14 @@ import org.springframework.stereotype.Component;
 
 import java.time.format.DateTimeFormatter;
 
+/**
+ * O `CriadorNotificacaoContasProximasAoVencimento` é um componente responsável por criar e enviar notificações
+ * para usuários sobre contas que estão próximas do vencimento.
+ *
+ * Esta classe utiliza um serviço de contas a pagar e um notificador para gerenciar o processo de notificação. A cada
+ * intervalo de tempo definido, ela recupera as contas que estão prestes a vencer e cria notificações apropriadas
+ * para cada usuário.
+ */
 @Component
 public class CriadorNotificacaoContasProximasAoVencimento {
 

@@ -63,7 +63,7 @@ public class ContasAPagarResource {
         return ResponseEntity.ok(contas);
     }
 
-    @GetMapping(value = "/proximas/vencimento", produces = MediaType.APPLICATION_NDJSON_VALUE)
+    @GetMapping(value = "/proximas/vencimento", produces = "text/event-stream")
     public Flux<Notificacao> listarContasProximasAoVencimento() {
 
         final Long idUsuario = usuarioService.getUsuarioLogado().getId();

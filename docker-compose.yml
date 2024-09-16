@@ -7,20 +7,18 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: 123456
       POSTGRES_DB: gestao-contas-domesticas
-    ports:
-      - "5432:5432"
+#      deveria ser utilizado portas porém devido ao tempo optei por utilizar mode host
+    network_mode: host
     restart: always
   gestao-contas-domesticas-api:
     build: ./backend
-    ports:
-      - "8080:8080"
-    links:
-      - postgres:postgres
+#      deveria ser utilizado portas porém devido ao tempo optei por utilizar mode host
+    network_mode: host
     depends_on:
       - postgres
-#  gestao-contas-domesticas-frontend:
-#    build: ./frontend
-#    ports:
-#      - "4200:80"
-#    depends_on:
-#      - gestao-contas-domesticas-api
+  gestao-contas-domesticas-frontend:
+    build: ./frontend
+#      deveria ser utilizado portas porém devido ao tempo optei por utilizar mode host
+    network_mode: host
+    depends_on:
+      - gestao-contas-domesticas-api

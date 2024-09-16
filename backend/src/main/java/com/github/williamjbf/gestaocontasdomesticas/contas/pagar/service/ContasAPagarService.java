@@ -5,16 +5,20 @@ import com.github.williamjbf.gestaocontasdomesticas.contas.Status;
 import com.github.williamjbf.gestaocontasdomesticas.contas.TipoConta;
 import com.github.williamjbf.gestaocontasdomesticas.contas.pagar.AtualizarContaAPagarDTO;
 import com.github.williamjbf.gestaocontasdomesticas.contas.pagar.ContaAPagarDTO;
+import com.github.williamjbf.gestaocontasdomesticas.contas.pagar.service.dto.GastosMensais;
 import com.github.williamjbf.gestaocontasdomesticas.contas.repository.ContasJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -68,4 +72,18 @@ public class ContasAPagarService {
 
         return repository.save(conta);
     }
+
+    public List<GastosMensais> recuperarTotalGastoPorMes(final Long idUsuario) {
+        final List<Object[]> results = this.repository.recuperarTotalGastoPorMes(idUsuario);
+
+        return results.stream()
+                .map(result -> {
+                    final String mesAno = (String) result[0];
+                    final BigDecimal valor = (BigDecimal) result[1];
+                    final String categoria = (String) result[2];
+
+                    return new GastosMensais(mesAno, categoria, valor);
+                }).collect(Collectors.toList());
+    }
+
 }

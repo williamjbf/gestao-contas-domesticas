@@ -25,6 +25,9 @@ import org.springframework.web.reactive.result.method.annotation.ResponseEntityE
 
 import java.io.IOException;
 
+/**
+ * A `CustomExceptionHandler` é uma classe de tratamento de exceções centralizada para a aplicação.
+ */
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 

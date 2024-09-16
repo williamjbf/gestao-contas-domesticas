@@ -13,6 +13,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.io.IOException;
 import java.util.Optional;
 
+/**
+ * A `SimpleCORSFilter` é uma implementação personalizada de filtro para configurar
+ * o CORS (Cross-Origin Resource Sharing) em uma aplicação web.
+ */
 @Component
 public class SimpleCORSFilter implements Filter {
 

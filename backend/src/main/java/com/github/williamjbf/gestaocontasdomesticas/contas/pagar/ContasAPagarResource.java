@@ -17,6 +17,13 @@ import reactor.core.publisher.Sinks;
 
 import java.util.List;
 
+/**
+ * Controlador REST responsável por gerenciar as contas a pagar do sistema.
+ *
+ * Esta classe fornece endpoints que permitem aos usuários criar, atualizar, listar
+ * e receber notificações sobre suas contas a pagar. As operações são protegidas, exigindo
+ * que o usuário esteja autenticado para realizar as ações disponíveis.
+ */
 @RestController
 @RequestMapping("/api/contas/pagar")
 public class ContasAPagarResource {

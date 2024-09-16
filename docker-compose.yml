@@ -1,0 +1,26 @@
+version: '3'
+services:
+  postgres:
+    container_name: gestao-contas-domesticas-postgres
+    image: postgres:13
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 123456
+      POSTGRES_DB: gestao-contas-domesticas
+    ports:
+      - "5432:5432"
+    restart: always
+  gestao-contas-domesticas-api:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    links:
+      - postgres:postgres
+    depends_on:
+      - postgres
+#  gestao-contas-domesticas-frontend:
+#    build: ./frontend
+#    ports:
+#      - "4200:80"
+#    depends_on:
+#      - gestao-contas-domesticas-api

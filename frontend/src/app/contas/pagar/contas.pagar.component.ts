@@ -4,6 +4,7 @@ import {DatePipe, NgClass, NgForOf, NgIf} from "@angular/common";
 import {negativeValueValidator} from "../../validators/negative-value.validator/negative-value.validator";
 import {ContaPagar} from "./models/conta.pagar.model";
 import {ContasPagarService} from "./service/api.contas.pagar.servite";
+import {NotificacaoService} from "../../notificacao/service/notificacao.service";
 
 @Component({
   selector: 'app-contas-a-pagar',
@@ -26,7 +27,8 @@ export class ContasPagarComponent {
 
   constructor(private fb: FormBuilder,
               private service: ContasPagarService,
-              private datePipe: DatePipe) {
+              private datePipe: DatePipe,
+              private notificacaoService: NotificacaoService) {
     this.contaForm = this.fb.group({
       descricao: ['', Validators.required],
       valor: [0, [Validators.required, negativeValueValidator()]],
@@ -38,6 +40,12 @@ export class ContasPagarComponent {
 
   async ngOnInit() {
     await this.loadContas();
+    console.log(">>> Inscrevendo para receber notificações...")
+    this.notificacaoService.getNotificacoes()
+      .subscribe({
+        next: notificacao => alert('notificacao: ' + notificacao.mensagem),
+        error: err => console.error('Erro ao receber notificações', err)
+      })
   }
 
   async addOrUpdateConta(){

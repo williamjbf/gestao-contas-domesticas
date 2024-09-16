@@ -13,20 +13,10 @@ import {NotificacaoService} from "./notificacao/service/notificacao.service";
 export class AppComponent {
   title = 'frontend';
 
-  constructor(private router: Router,
-              private notificacaoService: NotificacaoService) {}
+  constructor(private router: Router) {}
 
   isLoginPage(): boolean {
     return this.router.url === '/login' || this.router.url ==='/cadastro';
-  }
-
-  ngOnInit() {
-    console.log(">>> Inscrevendo para receber notificações...")
-    this.notificacaoService.getNotificacoes()
-      .subscribe({
-        next: notificacao => alert('notificacao: ' + notificacao.mensagem),
-        error: err => console.error('Erro ao receber notificações', err)
-      })
   }
 
 }

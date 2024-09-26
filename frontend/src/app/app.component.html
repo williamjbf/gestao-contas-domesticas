@@ -1,8 +1,10 @@
 <nav *ngIf="!isLoginPage()">
-  <ul>
-    <li><a routerLink="/contas-a-pagar">Contas a Pagar</a></li>
-    <li><a routerLink="/contas-a-receber">Contas a Receber</a></li>
-    <li><a routerLink="/cartoes">Cartões</a></li>
-  </ul>
+
+  <app-nav>
+  </app-nav>
+
 </nav>
-<router-outlet></router-outlet>
+
+<nav *ngIf="isLoginPage()">
+    <router-outlet></router-outlet>
+</nav>

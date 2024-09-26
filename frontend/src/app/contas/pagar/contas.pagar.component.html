@@ -1,6 +1,8 @@
 <div class="container">
+  <section class="form-section">
   <h2>Contas a Pagar</h2>
   <form [formGroup]="contaForm" (ngSubmit)="addOrUpdateConta()">
+
     <label for="descricao">Descrição:</label>
     <input id="descricao" formControlName="descricao" required>
     <div *ngIf="contaForm.get('descricao')?.invalid && contaForm.get('descricao')?.touched">
@@ -35,9 +37,9 @@
     <select id="categoria" formControlName="categoria">
       <option value="ALIMENTAÇÃO">Alimentação</option>
       <option value="MORADIA">Moradia</option>
-      <option value="TRANSPORTE">Moradia</option>
-      <option value="SAÚDE">Moradia</option>
-      <option value="EDUCAÇÃO">Moradia</option>
+      <option value="TRANSPORTE">Transporte</option>
+      <option value="SAÚDE">Saúde</option>
+      <option value="EDUCAÇÃO">Educação</option>
       <option value="LAZER_E_ENTRETIMENTO">Lazer e Entreterimento</option>
       <option value="OUTRO">Outro</option>
     </select>
@@ -45,11 +47,10 @@
       A categoria é obrigatória.
     </div>
 
-    <button type="submit">Salvar Compra</button>
+    <button type="submit">Salvar Conta a pagar</button>
   </form>
-
+  </section>
   <div *ngIf="contas.length > 0">
-    <h3>Cartões Cadastrados</h3>
     <table>
       <thead>
       <tr>

@@ -9,6 +9,7 @@ import { CartaoService } from "../api.cartoes.service";
 import {ActivatedRoute} from "@angular/router";
 import {ParcelasModalComponent} from "./parcelas/parcelas-modal.component";
 import {Parcela} from "./parcelas/models/parcela.model";
+import {MatTableModule} from '@angular/material/table';
 
 @Component({
   selector: 'app-compras-cartao-credito',
@@ -21,7 +22,8 @@ import {Parcela} from "./parcelas/models/parcela.model";
     NgForOf,
     ReactiveFormsModule,
     ParcelasModalComponent,
-    NgClass
+    NgClass,
+    MatTableModule
   ],
   providers: [DatePipe]
 })

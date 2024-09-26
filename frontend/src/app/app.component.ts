@@ -1,12 +1,14 @@
 import { Component } from '@angular/core';
 import {Router, RouterLink, RouterOutlet} from '@angular/router';
 import {NgIf} from "@angular/common";
-import {NotificacaoService} from "./notificacao/service/notificacao.service";
+import {NavComponent} from "./nav/nav.component";
+import {MatInputModule} from '@angular/material/input';
+
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, RouterLink, NgIf],
+  imports: [RouterOutlet, RouterLink, NgIf, NavComponent, MatInputModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

@@ -32,9 +32,9 @@
     <select id="categoria" formControlName="categoria">
       <option value="ALIMENTAÇÃO">Alimentação</option>
       <option value="MORADIA">Moradia</option>
-      <option value="TRANSPORTE">Moradia</option>
-      <option value="SAÚDE">Moradia</option>
-      <option value="EDUCAÇÃO">Moradia</option>
+      <option value="TRANSPORTE">Transporte</option>
+      <option value="SAÚDE">Saúde</option>
+      <option value="EDUCAÇÃO">Educação</option>
       <option value="LAZER_E_ENTRETIMENTO">Lazer e Entreterimento</option>
       <option value="OUTRO">Outro</option>
     </select>
@@ -54,7 +54,6 @@
   </form>
 
   <div *ngIf="compras.length > 0">
-    <h3>Compras Registradas</h3>
     <table>
       <thead>
       <tr>

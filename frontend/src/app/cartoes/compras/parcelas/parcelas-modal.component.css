@@ -1,127 +1,122 @@
+/* Centraliza o modal na tela */
+.modal {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+}
+
+/* Conteúdo do modal */
+.modal-content {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  position: relative;
+  overflow: auto;
+}
+
+/* Botão de fechar o modal */
+.close {
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  color: #aaa;
+}
+
+.close:hover {
+  color: #000;
+}
+
+/* Estilo da tabela */
 table {
   width: 100%;
   border-collapse: collapse;
-  margin: 20px 0;
-  font-size: 18px;
+  margin-top: 20px;
+}
+
+caption {
+  caption-side: top;
+  font-size: 1.2em;
+  font-weight: bold;
+  margin-bottom: 10px;
   text-align: left;
 }
 
 th, td {
-  padding: 12px 15px;
   border: 1px solid #ddd;
+  padding: 12px;
+  text-align: left;
 }
 
 th {
   background-color: #f4f4f4;
 }
 
-tr:nth-child(even) {
+tbody tr:nth-child(even) {
   background-color: #f9f9f9;
 }
 
-tr:hover {
-  background-color: #f1f1f1;
+/* Linhas condicionais */
+.linha-paga {
+  background-color: #d4edda;
 }
 
+.linha-vencida {
+  background-color: #f8d7da;
+}
+
+/* Botões */
 button {
-  background-color: #4CAF50;
-  color: white;
+  padding: 8px 12px;
   border: none;
-  padding: 10px 20px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
+  border-radius: 5px;
   cursor: pointer;
-  border-radius: 4px;
-}
-
-button:hover {
-  background-color: #45a049;
-}
-
-.modal {
-  display: block;
-  position: fixed;
-  z-index: 1;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-  background-color: rgb(0,0,0);
-  background-color: rgba(0,0,0,0.4);
-}
-
-.modal-content {
-  background-color: #fefefe;
-  margin: 15% auto;
-  padding: 20px;
-  border: 1px solid #888;
-  width: 80%;
-}
-
-.close {
-  color: #aaa;
-  float: right;
-  font-size: 28px;
-  font-weight: bold;
-}
-
-.close:hover,
-.close:focus {
-  color: black;
-  text-decoration: none;
-  cursor: pointer;
+  font-size: 14px;
 }
 
 .btn-paga {
-  background-color: blue;
+  background-color: #28a745;
   color: white;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
 }
 
 .btn-paga:hover {
-  background-color: darkblue;
+  background-color: #218838;
 }
 
 .btn-nao-paga {
-  background-color: red;
+  background-color: #dc3545;
   color: white;
-  border: none;
-  padding: 10px 20px;
-  cursor: pointer;
 }
 
 .btn-nao-paga:hover {
-  background-color: darkred;
+  background-color: #c82333;
 }
 
-/* Suave cor azul que indica que a Parcela foi paga */
-.linha-paga {
-  background-color: #e0f7fa;
-}
+/* Responsividade */
+@media (max-width: 600px) {
+  .modal-content {
+    width: 100%;
+    max-width: none;
+  }
 
-.linha-paga:nth-child(even) {
-  background-color: #d0eef2; /* Cor ligeiramente diferente para linhas pares */
-}
+  table, th, td {
+    font-size: 14px;
+    padding: 8px;
+  }
 
-.linha-paga:hover {
-  background-color: #c0e7ec; /* Cor diferente ao passar o mouse */
-}
-
-/* Suave cor vermelha que indica que a data de pagamento da Parcela expirou */
-.linha-vencida {
-  background-color: #ffebee;
-}
-
-.linha-vencida:nth-child(even) {
-  background-color: #fcdcdc; /* Cor ligeiramente diferente para linhas pares */
-}
-
-.linha-vencida:hover {
-  background-color: #f9caca; /* Cor diferente ao passar o mouse */
+  button {
+    font-size: 12px;
+  }
 }

@@ -54,10 +54,7 @@ export class ParcelasModalComponent {
   }
 
   isVencida(parcela: Parcela): boolean {
-    if (parcela.paga) return false;
-
-    const hoje = new Date();
-    return new Date(parcela.dataCobranca) <= hoje;
+    return parcela.paga;
   }
 
 }

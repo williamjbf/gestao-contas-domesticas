@@ -54,10 +54,8 @@ body {
   transition: border 0.3s ease, box-shadow 0.3s ease;
 }
 
-
-
 .cadastro-container input:focus {
-  border-color: #007bff;
+  border-color: #673ab7;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
   outline: none;
 }
@@ -93,7 +91,7 @@ body {
 .cadastro-container button {
   padding: 0.85em;
   color: #fff;
-  background-color: #007bff;
+  background-color: #673ab7;
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -102,12 +100,12 @@ body {
 }
 
 .cadastro-container button:hover {
-  background-color: #0056b3;
-  box-shadow: 0 4px 10px rgba(0, 91, 179, 0.4);
+  background-color: #673ab7;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
 }
 
 .cadastro-container input:focus {
-  border-color: #007bff;
+  border-color: #673ab7;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
   outline: none;
 }
@@ -138,6 +136,13 @@ body {
 }
 
 .cadastro-container button:hover {
-  background-color: #0056b3;
-  box-shadow: 0 4px 10px rgba(0, 91, 179, 0.4);
+  background-color: #673ab7;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+
+form input,
+form select,
+form button {
+  margin-bottom: 15px;
 }
